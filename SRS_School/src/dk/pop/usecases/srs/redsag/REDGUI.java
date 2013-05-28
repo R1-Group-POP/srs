@@ -18,13 +18,11 @@ import java.awt.Color;
 public class REDGUI extends javax.swing.JDialog {
 
     private REDHandler rEDHandler;
-    private REDHSGUI rEDHSGUI;
     private Sag sag;
     
-    public REDGUI(java.awt.Frame parent, boolean modal, REDHandler rEDHandler, REDHSGUI rEDHSGUI) {
+    public REDGUI(java.awt.Frame parent, boolean modal, REDHandler rEDHandler) {
         super(parent, modal);
         this.rEDHandler = rEDHandler;
-        this.rEDHSGUI = rEDHSGUI;
         setLookAndFeel();
         initComponents();
         setFrame();
@@ -734,6 +732,7 @@ public class REDGUI extends javax.swing.JDialog {
         
         if(!betalingCPR_textField.getText().equals(sag.getBetaler().getBetalingCPR())) {
             Betaler betaler = new Betaler(betalingCPR_textField.getText(), betalingNavn_textField.getText());
+            betaler.add(sag);
             this.sag.setBetaler(betaler);
             betalerChanged = false;
         }
@@ -741,7 +740,6 @@ public class REDGUI extends javax.swing.JDialog {
         this.sag.setBetalingBelob(Double.valueOf(betalingBelob_textField.getText()));
         
         rEDHandler.gemSag(sag, betalerChanged);
-        rEDHSGUI.hentSager();
         this.setVisible(false);
         resetFields();
     }//GEN-LAST:event_gem_buttonActionPerformed
