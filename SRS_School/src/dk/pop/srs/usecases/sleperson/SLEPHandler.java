@@ -15,6 +15,10 @@ import java.util.ArrayList;
 public class SLEPHandler {
     private SagsKatalog sagsKatalog;
 
+    public SLEPHandler(SagsKatalog sagsKatalog) {
+        this.sagsKatalog = sagsKatalog;
+    }
+
     public void sletPerson(Person person) {
         sagsKatalog.sletPerson(person);
     }

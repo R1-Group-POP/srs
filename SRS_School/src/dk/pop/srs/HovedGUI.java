@@ -123,7 +123,8 @@ public class HovedGUI extends javax.swing.JFrame {
         registrerSag_menuItem = new javax.swing.JMenuItem();
         redigerSag_menuItem = new javax.swing.JMenuItem();
         sletSag_menuItem = new javax.swing.JMenuItem();
-        personer_menuItem = new javax.swing.JMenuItem();
+        personer_menu = new javax.swing.JMenu();
+        sletPerson_menuItem = new javax.swing.JMenuItem();
         betalere_menuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -352,9 +353,17 @@ public class HovedGUI extends javax.swing.JFrame {
 
         administrer_menu.add(sager_menu);
 
-        personer_menuItem.setText("Personer");
-        personer_menuItem.setEnabled(false);
-        administrer_menu.add(personer_menuItem);
+        personer_menu.setText("Personer");
+
+        sletPerson_menuItem.setText("Slet person");
+        sletPerson_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sletPerson_menuItemActionPerformed(evt);
+            }
+        });
+        personer_menu.add(sletPerson_menuItem);
+
+        administrer_menu.add(personer_menu);
 
         betalere_menuItem.setText("Betalere");
         betalere_menuItem.setEnabled(false);
@@ -531,6 +540,10 @@ public class HovedGUI extends javax.swing.JFrame {
     private void redigerSag_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redigerSag_menuItemActionPerformed
        rEDHSGUI.setVisible(true);
     }//GEN-LAST:event_redigerSag_menuItemActionPerformed
+
+    private void sletPerson_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sletPerson_menuItemActionPerformed
+        
+    }//GEN-LAST:event_sletPerson_menuItemActionPerformed
 //
 //    /**
 //     * @param args the command line arguments
@@ -582,7 +595,7 @@ public class HovedGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem logOversigt_menuItem;
     private javax.swing.JMenuItem luk_menuitem;
     private javax.swing.JRadioButton paragraf_radioButton;
-    private javax.swing.JMenuItem personer_menuItem;
+    private javax.swing.JMenu personer_menu;
     private javax.swing.JMenuItem print_menuItem;
     private javax.swing.JMenuItem redigerSag_menuItem;
     private javax.swing.JMenuItem registrerSag_menuItem;
@@ -592,6 +605,7 @@ public class HovedGUI extends javax.swing.JFrame {
     private javax.swing.JTable sager_table;
     private javax.swing.JRadioButton sagstype_radioButton;
     private javax.swing.JPanel search_pane;
+    private javax.swing.JMenuItem sletPerson_menuItem;
     private javax.swing.JMenuItem sletSag_menuItem;
     private javax.swing.JButton sogEfterSager_button;
     private javax.swing.JTextField sog_textField;

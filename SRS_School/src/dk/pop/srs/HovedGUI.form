@@ -82,12 +82,21 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="personer_menuItem">
+            <Menu class="javax.swing.JMenu" name="personer_menu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Personer"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="sletPerson_menuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Slet person"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sletPerson_menuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="betalere_menuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Betalere"/>
