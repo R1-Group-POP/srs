@@ -28,8 +28,14 @@ public class SagsKatalog {
 
     public boolean gemSag(Sag sag, boolean betalerChanged) {
         if (betalerChanged) {
-            /** gem her **/
-            return sagDAO.opretBetaler(sag.getBetaler());
+            boolean betalerGemt = sagDAO.opretBetaler(sag.getBetaler());
+            
+            if(betalerGemt) {
+                
+                return true;
+            } else {
+                return false;
+            }
         } else {
             /** gem her **/
             return true;
