@@ -46,7 +46,7 @@ public class SRS {
         sLEHandler = new SLEHandler(sagsKatalog);
         rEDHandler = new REDHandler(sagsKatalog);
         
-        rEDGUI = new REDGUI(hovedGUI, true, rEDHandler, rEDHSGUI);
+        rEDGUI = new REDGUI(hovedGUI, true, rEDHandler);
         rEDHSGUI = new REDHSGUI(hovedGUI, true, rEDHandler, rEDGUI);
         sLEGUI = new SLEGUI(hovedGUI, true, sLEHandler);
         rEGSGUI = new REGGUI(hovedGUI, true, rEGSHandler);

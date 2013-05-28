@@ -27,7 +27,7 @@ public class SagsKatalog {
     }
     
     public void gemSag(Sag sag, boolean betalerChanged) {
-        
+        System.out.println("kus");
     }
 
     private void updateArray() {
