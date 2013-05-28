@@ -732,6 +732,7 @@ public class REDGUI extends javax.swing.JDialog {
         
         if(!betalingCPR_textField.getText().equals(sag.getBetaler().getBetalingCPR())) {
             Betaler betaler = new Betaler(betalingCPR_textField.getText(), betalingNavn_textField.getText());
+            betaler.add(sag);
             this.sag.setBetaler(betaler);
             betalerChanged = false;
         }

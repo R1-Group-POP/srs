@@ -25,9 +25,15 @@ public class SagsKatalog {
         this.sagDAO = sagDAO;
         updateArray();
     }
-    
-    public void gemSag(Sag sag, boolean betalerChanged) {
-        System.out.println("kus");
+
+    public boolean gemSag(Sag sag, boolean betalerChanged) {
+        if (betalerChanged) {
+            /** gem her **/
+            return sagDAO.opretBetaler(sag.getBetaler());
+        } else {
+            /** gem her **/
+            return true;
+        }
     }
 
     private void updateArray() {
@@ -60,24 +66,21 @@ public class SagsKatalog {
         sagDAO.sletPerson(person);
         personer.remove(person);
     }
-    
+
     public ArrayList<Person> getPersonV2(String value) {
         ArrayList<Person> fundnePersoner = new ArrayList<>();
         for (Person p : personer) {
-            if(p.getCpr().equalsIgnoreCase(value)) {
+            if (p.getCpr().equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
                 return fundnePersoner;
-            }
-            else if(p.getFornavn().equalsIgnoreCase(value)) {
+            } else if (p.getFornavn().equalsIgnoreCase(value)) {
+                fundnePersoner.add(p);
+            } else if (p.getMellemnavn().equalsIgnoreCase(value)) {
+                fundnePersoner.add(p);
+            } else if (p.getEfternavn().equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
             }
-            else if(p.getMellemnavn().equalsIgnoreCase(value)) {
-                fundnePersoner.add(p);
-            }
-            else if(p.getEfternavn().equalsIgnoreCase(value)) {
-                fundnePersoner.add(p);
-            }
-            
+
         }
         return fundnePersoner;
     }

@@ -63,17 +63,28 @@ public class SagDAO {
             Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void sletPerson(Person person) {
         try {
-            Statement st = dbConn.createStatement();            
+            Statement st = dbConn.createStatement();
             st.execute("DELETE FROM person WHERE CPR='" + person.getCpr() + "'");
         } catch (SQLException ex) {
             Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
+    public boolean opretBetaler(Betaler betaler) {
+        try {
+            if (!checkValueExists("BetalingCPR", betaler.getBetalingCPR(), "person")) {
+                Statement st = dbConn.createStatement();
+                st.execute("INSERT INTO person (BetalingCPR, BetalingNavn) VALUES(̈́'" + betaler.getBetalingCPR() + "', '" + betaler.getBetalingNavn() + "', )");
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
 //    public String[] getSag(int sagsID) {
 //        try {
@@ -89,7 +100,6 @@ public class SagDAO {
 //        }
 //        return null;
 //    }
-
     public boolean checkValueExists(String column, String value, String table) {
         try {
             Statement st = dbConn.createStatement();
@@ -121,7 +131,6 @@ public class SagDAO {
 //        }
 //        return null;
 //    }
-
 //    public String[] getBetaler(String betalingCPR) {
 //        if (checkValueExists("BetalingCPR", betalingCPR, "betaler")) {
 //            try {
@@ -138,7 +147,6 @@ public class SagDAO {
 //        }
 //        return null;
 //    }
-
     public ArrayList<ArrayList> getEverything() {
         try {
             Statement st = dbConn.createStatement();
@@ -147,18 +155,18 @@ public class SagDAO {
             ArrayList<Person> personer = new ArrayList<>();
             ArrayList<Betaler> betalere = new ArrayList<>();
             ArrayList<ArrayList> alt = new ArrayList<>();
-            
+
             alt.add(sager);
             alt.add(personer);
             alt.add(betalere);
-            
+
 
             ResultSet rsPersoner = st.executeQuery("SELECT * FROM person");
             while (rsPersoner.next()) {
                 Person p = new Person(rsPersoner.getString(1), rsPersoner.getString(2), rsPersoner.getString(3), rsPersoner.getString(4));
                 personer.add(p);
             }
-            
+
             ResultSet rsBetalere = st.executeQuery("SELECT * FROM betaler");
             while (rsBetalere.next()) {
                 Betaler b = new Betaler(rsBetalere.getString(1), rsBetalere.getString(2));
@@ -184,7 +192,7 @@ public class SagDAO {
                 int periodeTil = rsSager.getInt("PERIODETIL");
                 int aer = rsSager.getInt("AER");
                 int sagstype = rsSager.getInt("SAGSTYPE");
-                
+
                 Sag sag;
 
                 for (Person p : personer) {
@@ -206,31 +214,31 @@ public class SagDAO {
                 sager.add(sag);
 
             }
-            
-            for(Person p : personer) {
-                for(Sag s : sager) {
-                    if(s.getPerson().getCpr().equals(p.getCpr())) {
+
+            for (Person p : personer) {
+                for (Sag s : sager) {
+                    if (s.getPerson().getCpr().equals(p.getCpr())) {
                         p.add(s);
                         break;
                     }
                 }
             }
-            
-            for(Betaler b : betalere) {
-                for(Sag s : sager) {
-                    if(s.getBetaler().getBetalingCPR().equals(b.getBetalingCPR())) {
+
+            for (Betaler b : betalere) {
+                for (Sag s : sager) {
+                    if (s.getBetaler().getBetalingCPR().equals(b.getBetalingCPR())) {
                         b.add(s);
                         break;
                     }
                 }
             }
-            
-            
+
+
             return alt;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return null;
     }
 }
