@@ -59,33 +59,35 @@ public class SLEPGUI extends javax.swing.JDialog {
 
     }
 
-    private void hentPersoner() {
+    private void hentPersoner(boolean ignoreError) {
         String value = person_textField.getText();
         ArrayList<Person> personer = sLEPHandler.getPersonV2(value);
 
 
 
-            if (!personer.isEmpty()) {
-                personer_table.setEnabled(true);
-                DefaultTableModel dtm = new DefaultTableModel();
-                for (String s : columnNames) {
-                    dtm.addColumn(s);
-                }
-
-                for (Person p : personer) {
-                    String[] a = {p.getCpr(), p.getFornavn(), p.getMellemnavn(), p.getEfternavn()};
-                    dtm.addRow(a);
-                }
-                personer_table.setModel(dtm);
-            } else {
-                DefaultTableModel dtm = new DefaultTableModel();
-                for (String s : columnNames) {
-                    dtm.addColumn(s);
-                    JOptionPane.showMessageDialog(this, "Personen blev ikke fundet\nHar du tastet rigtigt?", "Fejl", JOptionPane.ERROR_MESSAGE);
-                }
-                personer_table.setModel(dtm);
+        if (!personer.isEmpty()) {
+            personer_table.setEnabled(true);
+            DefaultTableModel dtm = new DefaultTableModel();
+            for (String s : columnNames) {
+                dtm.addColumn(s);
             }
 
+            for (Person p : personer) {
+                String[] a = {p.getCpr(), p.getFornavn(), p.getMellemnavn(), p.getEfternavn()};
+                dtm.addRow(a);
+            }
+            personer_table.setModel(dtm);
+        } else {
+            DefaultTableModel dtm = new DefaultTableModel();
+            for (String s : columnNames) {
+                dtm.addColumn(s);
+
+            }
+            personer_table.setModel(dtm);
+            if (!ignoreError) {
+                JOptionPane.showMessageDialog(this, "Personen blev ikke fundet\nHar du tastet rigtigt?", "Fejl", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     /**
@@ -142,7 +144,6 @@ public class SLEPGUI extends javax.swing.JDialog {
         jLabel2.setText("Personer");
 
         hentPersoner_button.setText("Find person");
-        hentPersoner_button.setEnabled(false);
         hentPersoner_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hentPersoner_buttonActionPerformed(evt);
@@ -234,7 +235,7 @@ public class SLEPGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_personer_tableFocusGained
 
     private void hentPersoner_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hentPersoner_buttonActionPerformed
-        hentPersoner();
+        hentPersoner(false);
     }//GEN-LAST:event_hentPersoner_buttonActionPerformed
 
     private void luk_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luk_buttonActionPerformed
@@ -247,14 +248,18 @@ public class SLEPGUI extends javax.swing.JDialog {
         ArrayList<Person> personer = sLEPHandler.getPersonV2(value);
 
         Person toDelete = personer.get(selection);
+
         int n = JOptionPane.showConfirmDialog(this, "Er du sikker på du vil slette den valgte person?\nADVARSEL, denne handling kan ikke gøres om!", "Slet person?", JOptionPane.YES_NO_OPTION);
         if (n == 0) {
-            sLEPHandler.sletPerson(toDelete);
-            hentPersoner();
-            JOptionPane.showMessageDialog(this, "Personen blev slettet!", "Slettet!", JOptionPane.PLAIN_MESSAGE);
+            if (sLEPHandler.sletPerson(toDelete)) {
+                hentPersoner(true);
+                JOptionPane.showMessageDialog(this, "Personen blev slettet!", "Slettet!", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Du skal slette alle personens sager før du kan slette personen", "Fejl", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_sletPerson_buttonActionPerformed
-
     /**
      * @param args the command line arguments
      */

@@ -73,6 +73,10 @@ public class Person {
         return sager.add(e);
     }
     
+    public int getArraySize() {
+        return sager.size();
+    }
+    
     
     
 }

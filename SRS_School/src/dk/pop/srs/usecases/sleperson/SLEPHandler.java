@@ -19,8 +19,8 @@ public class SLEPHandler {
         this.sagsKatalog = sagsKatalog;
     }
 
-    public void sletPerson(Person person) {
-        sagsKatalog.sletPerson(person);
+    public boolean sletPerson(Person person) {
+        return sagsKatalog.sletPerson(person);
     }
 
     public ArrayList<Person> getPersonV2(String value) {

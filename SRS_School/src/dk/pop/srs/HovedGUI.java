@@ -7,6 +7,8 @@ package dk.pop.srs;
 import dk.pop.usecases.srs.redsag.REDHSGUI;
 import dk.pop.usecases.srs.regsag.REGGUI;
 import dk.pop.srs.sag.Sag;
+import dk.pop.srs.usecases.sleperson.SLEPGUI;
+import dk.pop.srs.usecases.sleperson.SLEPHandler;
 import dk.pop.srs.usecases.slesag.SLEGUI;
 import dk.pop.srs.usecases.sogning.SOGNINGSHandler;
 import java.util.ArrayList;
@@ -24,13 +26,15 @@ public class HovedGUI extends javax.swing.JFrame {
     private REGGUI rEGSGUI;
     private SLEGUI sLEGUI;
     private REDHSGUI rEDHSGUI;
+    private SLEPGUI sLEPGUI;
     private SOGNINGSHandler sOGNINGSHandler;
     private String[] columnNames = {"CPR", "Sagssted", "Paragraf", "Foranstaltningsnavn", "Beskrivelse", "PeriodeFra", "PeriodeTil", "AER", "Sagstype", "BetalingCPR", "BetalingBeløb"};
 
-    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler) {
+    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI) {
         this.rEGSGUI = rEGSGUI;
         this.sLEGUI = sLEGUI;
         this.rEDHSGUI = rEDHSGUI;
+        this.sLEPGUI = sLEPGUI;
         this.sOGNINGSHandler = sOGNINGSHandler;
         setLookAndFeel();
         initComponents();
@@ -542,7 +546,7 @@ public class HovedGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_redigerSag_menuItemActionPerformed
 
     private void sletPerson_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sletPerson_menuItemActionPerformed
-        
+        sLEPGUI.setVisible(true);
     }//GEN-LAST:event_sletPerson_menuItemActionPerformed
 //
 //    /**

@@ -56,7 +56,7 @@ public class SRS {
         sLEGUI = new SLEGUI(hovedGUI, true, sLEHandler);
         rEGSGUI = new REGGUI(hovedGUI, true, rEGSHandler);
         sLEPGUI = new SLEPGUI(hovedGUI, true, sLEPHandler);
-        hovedGUI = new HovedGUI(rEGSGUI, sLEGUI, rEDHSGUI, sOGNINGSHandler);
+        hovedGUI = new HovedGUI(rEGSGUI, sLEGUI, rEDHSGUI, sOGNINGSHandler, sLEPGUI);
         
     }
 

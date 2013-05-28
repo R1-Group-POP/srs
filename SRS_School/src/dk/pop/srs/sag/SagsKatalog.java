@@ -56,9 +56,14 @@ public class SagsKatalog {
         sager.remove(sag);
     }
 
-    public void sletPerson(Person person) {
-        sagDAO.sletPerson(person);
-        personer.remove(person);
+    public boolean sletPerson(Person person) {
+        if(person.getArraySize() == 0) {
+            sagDAO.sletPerson(person);
+            personer.remove(person);
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public ArrayList<Person> getPersonV2(String value) {
@@ -90,6 +95,7 @@ public class SagsKatalog {
         }
         return null;
     }
+    
 
     public Person getPerson(String CPR) {
         for (Person p : personer) {
