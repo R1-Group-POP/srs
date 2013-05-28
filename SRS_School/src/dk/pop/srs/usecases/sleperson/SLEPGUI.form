@@ -133,7 +133,6 @@
         <Component class="javax.swing.JButton" name="hentPersoner_button">
           <Properties>
             <Property name="text" type="java.lang.String" value="Find person"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hentPersoner_buttonActionPerformed"/>
