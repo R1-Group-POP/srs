@@ -32,9 +32,6 @@ public class HovedGUI extends javax.swing.JFrame {
     private REDPGUI rEDPGUI;
     private String[] columnNames = {"CPR", "Sagssted", "Paragraf", "Foranstaltningsnavn", "Beskrivelse", "PeriodeFra", "PeriodeTil", "AER", "Sagstype", "BetalingCPR", "BetalingBeløb"};
 
-<<<<<<< HEAD
-    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI, REDPGUI rEDPGUI) {
-=======
     /**
      * Constructor
      * @param rEGSGUI
@@ -43,8 +40,7 @@ public class HovedGUI extends javax.swing.JFrame {
      * @param sOGNINGSHandler
      * @param sLEPGUI 
      */
-    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI) {
->>>>>>> 2151bf72cf95e502d1bceaf7c94a6abd0b903104
+    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI, REDPGUI rEDPGUI) {
         this.rEGSGUI = rEGSGUI;
         this.sLEGUI = sLEGUI;
         this.rEDHSGUI = rEDHSGUI;

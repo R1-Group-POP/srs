@@ -28,17 +28,13 @@ public class SLEHandler {
         sagsKatalog.sletSag(sag);
     }
     
-<<<<<<< HEAD
-    public ArrayList<Sag> sogCPR(String CPR, boolean ui90d) {
-=======
     /**
      * Get a persons sager
      * @param CPR
      * @param ui90d
      * @return 
      */
-    public ArrayList<Sag> getPersonsSager(String CPR, boolean ui90d) {
->>>>>>> 2151bf72cf95e502d1bceaf7c94a6abd0b903104
+    public ArrayList<Sag> sogCPR(String CPR, boolean ui90d) {
         return sagsKatalog.sogCPR(CPR, ui90d);
     }
     
