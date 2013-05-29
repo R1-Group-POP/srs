@@ -105,12 +105,21 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="betalere_menuItem">
+            <Menu class="javax.swing.JMenu" name="betalere_menu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Betalere"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="sletBetaler_menuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Slet betaler"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sletBetaler_menuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
       </SubComponents>
@@ -255,7 +264,7 @@
                           <Component id="ui90d_checkBox" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="sager_scrollPane" pref="461" max="32767" attributes="0"/>
+                      <Component id="sager_scrollPane" pref="469" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

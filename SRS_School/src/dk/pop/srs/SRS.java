@@ -5,6 +5,8 @@ import dk.pop.srs.database.SagDAO;
 import dk.pop.srs.database.util.DBTool;
 import dk.pop.srs.usecases.redperson.REDPGUI;
 import dk.pop.srs.usecases.redperson.REDPHandler;
+import dk.pop.srs.usecases.slebetaler.SLEBGUI;
+import dk.pop.srs.usecases.slebetaler.SLEBHandler;
 import dk.pop.srs.usecases.sleperson.SLEPGUI;
 import dk.pop.srs.usecases.sleperson.SLEPHandler;
 import dk.pop.usecases.srs.redsag.REDHSGUI;
@@ -40,6 +42,7 @@ public class SRS {
     private REDHandler rEDHandler;
     private SLEPHandler sLEPHandler;
     private REDPHandler rEDPHandler;
+    private SLEBHandler sLEBHandler;
     
     /**
      * GUI
@@ -50,6 +53,7 @@ public class SRS {
     private REGGUI rEGSGUI;
     private HovedGUI hovedGUI;
     private SLEPGUI sLEPGUI;
+    private SLEBGUI sLEBGUI;
     private REDPGUI rEDPGUI;
 
     /**
@@ -66,14 +70,16 @@ public class SRS {
         rEDHandler = new REDHandler(sagsKatalog);
         sLEPHandler = new SLEPHandler(sagsKatalog);
         rEDPHandler = new REDPHandler(sagsKatalog);
+        sLEBHandler = new SLEBHandler(sagsKatalog);
         
+        sLEBGUI = new SLEBGUI(hovedGUI, true, sLEBHandler);
         rEDGUI = new REDGUI(hovedGUI, true, rEDHandler);
         rEDHSGUI = new REDHSGUI(hovedGUI, true, rEDHandler, rEDGUI);
         sLEGUI = new SLEGUI(hovedGUI, true, sLEHandler);
         rEGSGUI = new REGGUI(hovedGUI, true, rEGSHandler);
         sLEPGUI = new SLEPGUI(hovedGUI, true, sLEPHandler);
         rEDPGUI = new REDPGUI(hovedGUI, true, rEDPHandler);
-        hovedGUI = new HovedGUI(rEGSGUI, sLEGUI, rEDHSGUI, sOGNINGSHandler, sLEPGUI, rEDPGUI);
+        hovedGUI = new HovedGUI(rEGSGUI, sLEGUI, rEDHSGUI, sOGNINGSHandler, sLEPGUI, rEDPGUI, sLEBGUI);
         
     }
 

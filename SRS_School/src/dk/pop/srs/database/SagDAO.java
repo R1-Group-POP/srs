@@ -89,6 +89,15 @@ public class SagDAO {
             Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void sletBetaler(Betaler betaler) {
+        try {
+            Statement st = dbConn.createStatement();
+            st.execute("DELETE FROM betaler WHERE betalingCPR='" + betaler.getBetalingCPR() + "'");
+        } catch (SQLException ex) {
+            Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * Updates a Sag in database from a Sag object
