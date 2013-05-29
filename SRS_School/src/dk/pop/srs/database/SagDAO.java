@@ -111,6 +111,15 @@ public class SagDAO {
             ex.printStackTrace();
         }
     }
+    
+    public void opdaterPerson(Person person) {
+        try {
+            Statement st = dbConn.createStatement();
+            st.execute("UPDATE person SET Fornavn='" + person.getFornavn()+ "', Mellemnavn='" + person.getMellemnavn() + "', Efternavn='" + person.getEfternavn() + "' WHERE CPR=" + person.getCpr());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * Creates a Betaler in database form a Betaler object

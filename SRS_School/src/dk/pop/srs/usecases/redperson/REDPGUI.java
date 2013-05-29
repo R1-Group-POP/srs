@@ -58,6 +58,12 @@ public class REDPGUI extends javax.swing.JDialog {
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
     }
+    private void resetFields(){
+        sog_TextField.setText("");
+        fornavn_TextField.setText("");
+        mellemnavn_TextField.setText("");
+        efternavn_TextField.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -213,6 +219,7 @@ public class REDPGUI extends javax.swing.JDialog {
 
     private void luk_JButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luk_JButtonActionPerformed
         this.dispose();
+        resetFields();
     }//GEN-LAST:event_luk_JButtonActionPerformed
 
     private void findPerson_JButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findPerson_JButtonActionPerformed
@@ -243,7 +250,8 @@ public class REDPGUI extends javax.swing.JDialog {
 
     private void rediger_JButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rediger_JButtonActionPerformed
         rEDPHandler.redigerPerson(sog_TextField.getText(), fornavn_TextField.getText(), mellemnavn_TextField.getText(), efternavn_TextField.getText());
-        
+        resetFields();
+        JOptionPane.showMessageDialog(this, "Personen blev redigeret!", "Succes!", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_rediger_JButtonActionPerformed
 
     /**
