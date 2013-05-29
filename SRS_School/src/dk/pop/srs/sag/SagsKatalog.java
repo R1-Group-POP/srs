@@ -102,8 +102,21 @@ public class SagsKatalog {
     }
 
     public void registrerSag(String sagsSted, String fornavn, String mellemnavn, String efternavn, String paragraf, String foranstalningsnavn, String beskrivelse, int periodeFra, int periodeTil, int aer, int sagsType, String betalingNavn, String betalingCPR, double betalingBelob, String CPR) {
-        Person person = new Person(CPR, fornavn, mellemnavn, efternavn);
-        Betaler betaler = new Betaler(betalingCPR, betalingNavn);
+        Person person = null;
+        Betaler betaler = null;
+        
+        if(checkPersonExists(CPR)) {
+            person = getPerson(CPR);
+        } else {
+            person = new Person(CPR, fornavn, mellemnavn, efternavn);
+        }
+        
+        if(checkBetalerExists(betalingCPR)) {
+            betaler = getBetaler(betalingCPR);
+        } else {
+            betaler = new Betaler(betalingCPR, betalingNavn);
+        }
+        
         Sag sag = new Sag(sagsSted, paragraf, foranstalningsnavn, beskrivelse, person, betaler, betalingBelob, periodeFra, periodeTil, aer, sagsType);
         sager.add(sag);
         int sagsID = sagDAO.opretSag(sag);
