@@ -23,10 +23,19 @@ public class SagDAO {
 
     private Connection dbConn;
 
+    /**
+     * Constructor
+     * @param dbConn 
+     */
     public SagDAO(Connection dbConn) {
         this.dbConn = dbConn;
     }
 
+    /**
+     * Creates a Sag in database from a Sag object
+     * @param sag
+     * @return 
+     */
     public int opretSag(Sag sag) {
         try {
             Statement st = dbConn.createStatement();
@@ -53,6 +62,10 @@ public class SagDAO {
         return -1;
     }
 
+    /**
+     * Deletes a Sag from database from a Sag object
+     * @param sag 
+     */
     public void sletSag(Sag sag) {
         try {
             Statement st = dbConn.createStatement();
@@ -64,6 +77,10 @@ public class SagDAO {
         }
     }
 
+    /**
+     * Deletes a Person from database from a Person object
+     * @param person 
+     */
     public void sletPerson(Person person) {
         try {
             Statement st = dbConn.createStatement();
@@ -73,20 +90,40 @@ public class SagDAO {
         }
     }
 
-//    public String[] getSag(int sagsID) {
-//        try {
-//            Statement st = dbConn.createStatement();
-//
-//            ResultSet rs = st.executeQuery("SELECT * FROM sag WHERE SagsID='" + sagsID + "'");
-//
-//            rs.next();
-//            String[] sag = {rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12)};
-//            return sag;
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//        return null;
-//    }
+    /**
+     * Updates a Sag in database from a Sag object
+     * @param sag 
+     */
+    public void opdaterSag(Sag sag) {
+        try {
+            Statement st = dbConn.createStatement();
+            st.execute("UPDATE sag SET SagsSted='" + sag.getSagsSted() + "', Paragraf='" + sag.getParagraf() + "', foranstaltningsnavn='" + sag.getForanstaltningsnavn() + "', Beskrivelse='" + sag.getBeskrivelse() + "', PeriodeFra='" + sag.getPeriodeFra() + "', PeriodeTil='" + sag.getPeriodeTil() + "', AER='" + sag.getAer() + "', SagsType='" + sag.getSagstype() + "', BetalingCPR='" + sag.getBetaler().getBetalingCPR() + "', BetalingBelob='" + sag.getBetalingBelob() + "' WHERE SagsID=" + sag.getSagsID());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Creates a Betaler in database form a Betaler object
+     * @param betaler 
+     */
+    public void opretBetaler(Betaler betaler) {
+        try {
+            Statement st = dbConn.createStatement();
+
+            st.execute("INSERT INTO betaler (betalingCPR, betalingNavn) VALUES('" + betaler.getBetalingCPR() + "', '" + betaler.getBetalingNavn() + "')");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    /**
+     * Checks if a value in a table exists, and return true or false
+     * @param column
+     * @param value
+     * @param table
+     * @return 
+     */
     public boolean checkValueExists(String column, String value, String table) {
         try {
             Statement st = dbConn.createStatement();
@@ -101,39 +138,11 @@ public class SagDAO {
         }
         return false;
     }
-
-//    public String[] getPerson(String CPR) {
-//        if (checkValueExists("CPR", CPR, "person")) {
-//            try {
-//                Statement st = dbConn.createStatement();
-//
-//                ResultSet rs = st.executeQuery("SELECT * FROM person WHERE CPR='" + CPR + "'");
-//                rs.next();
-//                String[] s = {rs.getString("fornavn"), rs.getString("mellemnavn"), rs.getString("efternavn")};
-//                return s;
-//
-//            } catch (SQLException ex) {
-//                Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return null;
-//    }
-//    public String[] getBetaler(String betalingCPR) {
-//        if (checkValueExists("BetalingCPR", betalingCPR, "betaler")) {
-//            try {
-//                Statement st = dbConn.createStatement();
-//
-//                ResultSet rs = st.executeQuery("SELECT * FROM betaler WHERE BetalingCPR='" + betalingCPR + "'");
-//                rs.next();
-//                String[] s = {rs.getString("BetalingNavn")};
-//                return s;
-//
-//            } catch (SQLException ex) {
-//                Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return null;
-//    }
+    
+    /**
+     * Returns an ArrayList with Sager, Personer, and Betalere, taken from the database and assembled
+     * @return 
+     */
     public ArrayList<ArrayList> getEverything() {
         try {
             Statement st = dbConn.createStatement();

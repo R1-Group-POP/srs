@@ -22,6 +22,12 @@ public class REGGUI extends javax.swing.JDialog {
     private ButtonGroup aer_Bg;
     private ButtonGroup sagsType_Bg;
 
+    /**
+     * Constructor
+     * @param parent
+     * @param modal
+     * @param rEGSHandler 
+     */
     public REGGUI(java.awt.Frame parent, boolean modal, REGHandler rEGSHandler) {
         super(parent, modal);
         this.rEGSHandler = rEGSHandler;
@@ -31,6 +37,9 @@ public class REGGUI extends javax.swing.JDialog {
         setRadioButtonGroups();
     }
 
+    /**
+     * Set look and field
+     */
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -55,10 +64,16 @@ public class REGGUI extends javax.swing.JDialog {
         //</editor-fold>>
     }
 
+    /**
+     * Set jDialog location to middle of the screen
+     */
     private void setFrame() {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Creates radio button groups
+     */
     private void setRadioButtonGroups() {
         aer_Bg = new ButtonGroup();
         aer_Bg.add(aerJa_radioButton);
@@ -71,6 +86,9 @@ public class REGGUI extends javax.swing.JDialog {
         sagsType_Bg.add(sagstypeMellmkommunal_radioButton);
     }
 
+    /**
+     * Resets gui fields
+     */
     public void resetFields() {
         cpr_textField.setText("");
         sagssted_textField.setText("");
@@ -99,14 +117,33 @@ public class REGGUI extends javax.swing.JDialog {
         betalingCPR_textField.setText("");
     }
 
+    /**
+     * Removes everything except 0-9 and returns a new string
+     * @param text
+     * @return 
+     */
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
     }
 
+    /**
+     * Removes everything except 0-9 , . and returns a new string
+     * @param text
+     * @return 
+     */
     public String removeLettersV2(String text) {
         return text.replaceAll("[^0-9.,]", "");
     }
 
+    /**
+     * Checks if the periode is valid.
+     * A month cant be below 1 and above 12.
+     * The periodeFra cant be higher than periodeTil
+     * @param periodeFra
+     * @param periodeTil
+     * @return
+     * @throws MonthException 
+     */
     public boolean tjekPeriode(int periodeFra, int periodeTil) throws MonthException {
         if (periodeFra < 1 || periodeFra > 12 || periodeTil < 1 || periodeTil > 12) {
             throw new MonthException();

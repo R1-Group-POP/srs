@@ -24,9 +24,15 @@ import java.sql.SQLException;
  */
 public class SRS {
 
+    /**
+     * Database
+     */
     private Connection dbConn;
     private SagDAO sagDAO;
     
+    /**
+     * Handler and information expert
+     */
     private SagsKatalog sagsKatalog;
     private REGHandler rEGSHandler;
     private SOGNINGSHandler sOGNINGSHandler;
@@ -35,6 +41,9 @@ public class SRS {
     private SLEPHandler sLEPHandler;
     private REDPHandler rEDPHandler;
     
+    /**
+     * GUI
+     */
     private REDGUI rEDGUI;
     private REDHSGUI rEDHSGUI;
     private SLEGUI sLEGUI;
@@ -43,6 +52,9 @@ public class SRS {
     private SLEPGUI sLEPGUI;
     private REDPGUI rEDPGUI;
 
+    /**
+     * Constructor
+     */
     public SRS() {
         dbConn = DBTool.getInstance();
         sagDAO = new SagDAO(dbConn);
@@ -65,6 +77,11 @@ public class SRS {
         
     }
 
+    /**
+     * Main method
+     * @param args
+     * @throws SQLException 
+     */
     public static void main(String[] args) throws SQLException {
         SRS srs = new SRS();
         srs.hovedGUI.setVisible(true);

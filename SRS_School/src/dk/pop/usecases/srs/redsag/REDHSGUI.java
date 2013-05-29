@@ -20,6 +20,13 @@ public class REDHSGUI extends javax.swing.JDialog {
     private REDGUI rEDGUI;
     private String[] columnNames = {"CPR", "Sagssted", "Paragraf", "Foranstaltningsnavn", "Beskrivelse", "PeriodeFra", "PeriodeTil", "AER", "Sagstype", "BetalingCPR", "BetalingBeløb"};
     
+    /**
+     * Constructor
+     * @param parent
+     * @param modal
+     * @param rEDHandler
+     * @param rEDGUI 
+     */
     public REDHSGUI(java.awt.Frame parent, boolean modal, REDHandler rEDHandler, REDGUI rEDGUI) {
         super(parent, modal);
         this.rEDHandler = rEDHandler;
@@ -29,6 +36,9 @@ public class REDHSGUI extends javax.swing.JDialog {
         setFrame();
     }
     
+    /**
+     * Set look and feel
+     */
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -53,10 +63,16 @@ public class REDHSGUI extends javax.swing.JDialog {
         //</editor-fold>>
     }
 
+    /**
+     * Set jDialog location to middle of screen
+     */
     private void setFrame() {
         setLocationRelativeTo(null);
     }
     
+    /**
+     * Resets the gui fields
+     */
     private void reset() {
         cpr_textField.setText("");
         sager_table.setModel(new DefaultTableModel());
@@ -65,6 +81,9 @@ public class REDHSGUI extends javax.swing.JDialog {
         hentSager_button.setEnabled(false);
     }
     
+    /**
+     * Populates the table with sager
+     */
     public void hentSager() {
         String cpr = cpr_textField.getText();
 
@@ -98,10 +117,20 @@ public class REDHSGUI extends javax.swing.JDialog {
         }
     }
     
+    /**
+     * Removes everything except 0-9 and returns a new string
+     * @param text
+     * @return 
+     */
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
     }
 
+    /**
+     * Removes everything except 0-9 , . and returns a new string
+     * @param text
+     * @return 
+     */
     public String removeLettersV2(String text) {
         return text.replaceAll("[^0-9.,]", "");
     }

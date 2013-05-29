@@ -21,7 +21,10 @@ public class SLEPGUI extends javax.swing.JDialog {
     private String[] columnNames = {"CPR", "Fornavn", "Mellemnavn", "Efternavn"};
 
     /**
-     * Creates new form SLEPGUI
+     * Constructor
+     * @param parent
+     * @param modal
+     * @param sLEPHandler 
      */
     public SLEPGUI(java.awt.Frame parent, boolean modal, SLEPHandler sLEPHandler) {
         super(parent, modal);
@@ -32,10 +35,16 @@ public class SLEPGUI extends javax.swing.JDialog {
         setTableRules();
     }
 
+    /**
+     * Sets jDialog location to middle of the screen
+     */
     private void setFrame() {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Set look and feel
+     */
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -54,11 +63,18 @@ public class SLEPGUI extends javax.swing.JDialog {
         //</editor-fold>>
     }
 
+    /**
+     * Set table rules
+     */
     public void setTableRules() {
         personer_table.getTableHeader().setReorderingAllowed(false);
 
     }
-
+    
+    /**
+     * Get personer and set them to the table model
+     * @param ignoreError 
+     */
     private void hentPersoner(boolean ignoreError) {
         String value = person_textField.getText();
         ArrayList<Person> personer;
