@@ -53,6 +53,10 @@ public class Betaler {
         return sager.add(e);
     }
     
+    public boolean remove(Sag e) {
+        return sager.remove(e);
+    }
+    
     
     
     
