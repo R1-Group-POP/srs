@@ -21,11 +21,33 @@ public class SagsKatalog {
     private ArrayList<Person> personer = new ArrayList<>();
     private ArrayList<Betaler> betalere = new ArrayList<>();
 
+    /**
+     * Constructor
+     *
+     * @param sagDAO
+     */
     public SagsKatalog(SagDAO sagDAO) {
         this.sagDAO = sagDAO;
         updateArray();
     }
 
+    /**
+     * Saves a sag object with the new variables given
+     *
+     * @param sagsSted
+     * @param paragraf
+     * @param foranstalningsnavn
+     * @param beskrivelse
+     * @param periodeFra
+     * @param periodeTil
+     * @param aer
+     * @param sagsType
+     * @param betalingNavn
+     * @param betalingCPR
+     * @param betalingBelob
+     * @param sag
+     * @return
+     */
     public boolean gemSag(String sagsSted, String paragraf, String foranstalningsnavn, String beskrivelse, int periodeFra, int periodeTil, int aer, int sagsType, String betalingNavn, String betalingCPR, double betalingBelob, Sag sag) {
 
         if (!sag.getBetaler().getBetalingCPR().equals(betalingCPR)) { //Hvis betaleren er blevet ændret
@@ -87,6 +109,14 @@ public class SagsKatalog {
         return false;
     }
 
+    /**
+     * Creates a betaler object, inserts it into ArrayList, database, and
+     * finally returns it
+     *
+     * @param betalingCPR
+     * @param betalingNavn
+     * @return
+     */
     public Betaler opretBetaler(String betalingCPR, String betalingNavn) {
         Betaler betaler = new Betaler(betalingCPR, betalingNavn);
         betalere.add(betaler);
@@ -94,6 +124,9 @@ public class SagsKatalog {
         return betaler;
     }
 
+    /**
+     * Updates all ArrayLists with all information from the database
+     */
     private void updateArray() {
         ArrayList<ArrayList> alt = sagDAO.getEverything();
         sager = alt.get(0);
@@ -101,22 +134,41 @@ public class SagsKatalog {
         betalere = alt.get(2);
     }
 
+    /**
+     * Registers a new sag object
+     *
+     * @param sagsSted
+     * @param fornavn
+     * @param mellemnavn
+     * @param efternavn
+     * @param paragraf
+     * @param foranstalningsnavn
+     * @param beskrivelse
+     * @param periodeFra
+     * @param periodeTil
+     * @param aer
+     * @param sagsType
+     * @param betalingNavn
+     * @param betalingCPR
+     * @param betalingBelob
+     * @param CPR
+     */
     public void registrerSag(String sagsSted, String fornavn, String mellemnavn, String efternavn, String paragraf, String foranstalningsnavn, String beskrivelse, int periodeFra, int periodeTil, int aer, int sagsType, String betalingNavn, String betalingCPR, double betalingBelob, String CPR) {
         Person person = null;
         Betaler betaler = null;
-        
-        if(checkPersonExists(CPR)) {
+
+        if (checkPersonExists(CPR)) {
             person = getPerson(CPR);
         } else {
             person = new Person(CPR, fornavn, mellemnavn, efternavn);
         }
-        
-        if(checkBetalerExists(betalingCPR)) {
+
+        if (checkBetalerExists(betalingCPR)) {
             betaler = getBetaler(betalingCPR);
         } else {
             betaler = new Betaler(betalingCPR, betalingNavn);
         }
-        
+
         Sag sag = new Sag(sagsSted, paragraf, foranstalningsnavn, beskrivelse, person, betaler, betalingBelob, periodeFra, periodeTil, aer, sagsType);
         sager.add(sag);
         int sagsID = sagDAO.opretSag(sag);
@@ -128,6 +180,11 @@ public class SagsKatalog {
         betalere.add(betaler);
     }
 
+    /**
+     * Deletes a sag
+     *
+     * @param sag
+     */
     public void sletSag(Sag sag) {
         sagDAO.sletSag(sag);
         sager.remove(sag);
@@ -137,6 +194,12 @@ public class SagsKatalog {
         sag.getBetaler().remove(sag);
     }
 
+    /**
+     * Deletes a person object
+     *
+     * @param person
+     * @return
+     */
     public boolean sletPerson(Person person) {
         if (person.getArraySize() == 0) {
             sagDAO.sletPerson(person);
@@ -146,7 +209,13 @@ public class SagsKatalog {
             return false;
         }
     }
-    
+
+    /**
+     * Deletes a betaler object
+     *
+     * @param betaler
+     * @return
+     */
     public boolean sletBetaler(Betaler betaler) {
         if (betaler.getArraySize() == 0) {
             sagDAO.sletBetaler(betaler);
@@ -157,6 +226,12 @@ public class SagsKatalog {
         }
     }
 
+    /**
+     * Returns an ArrayList with all the personer found by value given
+     *
+     * @param value
+     * @return
+     */
     public ArrayList<Person> getPersonV2(String value) {
         ArrayList<Person> fundnePersoner = new ArrayList<>();
         for (Person p : personer) {
@@ -182,7 +257,13 @@ public class SagsKatalog {
         }
         return fundnePersoner;
     }
-    
+
+    /**
+     * Returns an ArrayList with all the betaler found by value given
+     *
+     * @param value
+     * @return
+     */
     public ArrayList<Betaler> getBetalerV2(String value) {
         ArrayList<Betaler> fundneBetalere = new ArrayList<>();
         for (Betaler b : betalere) {
@@ -197,6 +278,12 @@ public class SagsKatalog {
         return fundneBetalere;
     }
 
+    /**
+     * Returns a sag object found by sagsID
+     *
+     * @param sagsID
+     * @return
+     */
     public Sag getSag(int sagsID) {
         for (Sag s : sager) {
             if (s.getSagsID() == sagsID) {
@@ -206,6 +293,12 @@ public class SagsKatalog {
         return null;
     }
 
+    /**
+     * Returns a person object found by CPR
+     *
+     * @param CPR
+     * @return
+     */
     public Person getPerson(String CPR) {
         for (Person p : personer) {
             if (p.getCpr().equals(CPR)) {
@@ -215,6 +308,12 @@ public class SagsKatalog {
         return null;
     }
 
+    /**
+     * Returns a betaler object found by betalingCPR
+     *
+     * @param betalingCPR
+     * @return
+     */
     public Betaler getBetaler(String betalingCPR) {
         for (Betaler b : betalere) {
             if (b.getBetalingCPR().equals(betalingCPR)) {
@@ -224,6 +323,12 @@ public class SagsKatalog {
         return null;
     }
 
+    /**
+     * Checks if a betaler exists and returns true or false
+     *
+     * @param betalingCPR
+     * @return
+     */
     public boolean checkBetalerExists(String betalingCPR) {
         for (Betaler b : betalere) {
             if (b.getBetalingCPR().equals(betalingCPR)) {
@@ -232,25 +337,43 @@ public class SagsKatalog {
         }
         return false;
     }
-    
+
+    /**
+     * Checks if a person exists and returns true or false
+     *
+     * @param CPR
+     * @return
+     */
     public boolean checkPersonExists(String CPR) {
-        for(Person p : personer) {
-            if(p.getCpr().equals(CPR)) {
+        for (Person p : personer) {
+            if (p.getCpr().equals(CPR)) {
                 return true;
             }
         }
         return false;
     }
 
-    
+    /**
+     * Saves a person with the new variables
+     * @param CPR
+     * @param fornavn
+     * @param mellemnavn
+     * @param efternavn
+     */
     public void redigerPerson(String CPR, String fornavn, String mellemnavn, String efternavn) {
-    Person p = getPerson(CPR);
-    p.setFornavn(fornavn);
-    p.setMellemnavn(mellemnavn);
-    p.setEfternavn(efternavn);
-    sagDAO.opdaterPerson(p);
-}
-    
+        Person p = getPerson(CPR);
+        p.setFornavn(fornavn);
+        p.setMellemnavn(mellemnavn);
+        p.setEfternavn(efternavn);
+        sagDAO.opdaterPerson(p);
+    }
+
+    /**
+     * Searches for a cpr, and returns an ArrayList with sager found
+     * @param CPR
+     * @param ui90d
+     * @return 
+     */
     public ArrayList<Sag> sogCPR(String CPR, boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_p = new ArrayList<>();
@@ -278,6 +401,12 @@ public class SagsKatalog {
         }
     }
 
+    /**
+     * Searches for a paragraf, and returns an ArrayList with sager found
+     * @param paragraf
+     * @param ui90d
+     * @return 
+     */
     public ArrayList<Sag> sogParagraf(String paragraf, boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_p = new ArrayList<>();
@@ -305,6 +434,12 @@ public class SagsKatalog {
         }
     }
 
+    /**
+     * Searches for a sagstype, and returns an ArrayList with sager found
+     * @param sagstype
+     * @param ui90d
+     * @return 
+     */
     public ArrayList<Sag> sogSagstype(String sagstype, boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_p = new ArrayList<>();
@@ -361,6 +496,11 @@ public class SagsKatalog {
         }
     }
 
+    /**
+     * Returns an ArrayList with all sager
+     * @param ui90d
+     * @return 
+     */
     public ArrayList<Sag> getAlleSager(boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_ui90d = new ArrayList<>();
@@ -381,15 +521,30 @@ public class SagsKatalog {
         }
     }
 
+    /**
+     * Checks if a value exists in the database
+     * @param column
+     * @param value
+     * @param table
+     * @return 
+     */
     public boolean checkValueExists(String column, String value, String table) {
         return sagDAO.checkValueExists(column, value, table);
     }
-    
-    public ArrayList<Person> getAllePersoner(){
+
+    /**
+     * Returns an ArrayList with all personer
+     * @return 
+     */
+    public ArrayList<Person> getAllePersoner() {
         return personer;
     }
-    
-    public ArrayList<Betaler> getAlleBetalere(){
+
+    /**
+     * Returns an ArrayList with all betalere
+     * @return 
+     */
+    public ArrayList<Betaler> getAlleBetalere() {
         return betalere;
     }
 }

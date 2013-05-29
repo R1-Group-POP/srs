@@ -79,7 +79,7 @@ public class REDHandler {
      * @param ui90d
      * @return 
      */
-    public ArrayList<Sag> getPersonsSager(String CPR, boolean ui90d) {
+    public ArrayList<Sag> sogCPR(String CPR, boolean ui90d) {
         return sagsKatalog.sogCPR(CPR, ui90d);
     }
     

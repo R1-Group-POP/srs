@@ -90,7 +90,7 @@ public class REDHSGUI extends javax.swing.JDialog {
         if (cpr.length() == 10) {
             if (rEDHandler.checkPersonExists(cpr)) {
                 sager_table.setEnabled(true);
-                ArrayList<Sag> sager = rEDHandler.getPersonsSager(cpr, false);
+                ArrayList<Sag> sager = rEDHandler.sogCPR(cpr, false);
                 if (!sager.isEmpty()) {
                     DefaultTableModel dtm = new DefaultTableModel();
                     for (String s : columnNames) {
@@ -301,7 +301,7 @@ public class REDHSGUI extends javax.swing.JDialog {
         int selection = sager_table.getSelectedRow();
         String cpr = cpr_textField.getText();
 
-        ArrayList<Sag> sager = rEDHandler.getPersonsSager(cpr.replace("-", ""), false);
+        ArrayList<Sag> sager = rEDHandler.sogCPR(cpr.replace("-", ""), false);
 
         Sag toEdit = sager.get(selection);
         rEDGUI.init(toEdit);

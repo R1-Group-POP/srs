@@ -19,6 +19,12 @@ public class REDPGUI extends javax.swing.JDialog {
     
     private REDPHandler rEDPHandler;
     
+    /**
+     * Constructor
+     * @param parent
+     * @param modal
+     * @param rEDPHandler 
+     */
     public REDPGUI(java.awt.Frame parent, boolean modal, REDPHandler rEDPHandler) {
         super(parent, modal);
         this.rEDPHandler = rEDPHandler;
@@ -27,6 +33,9 @@ public class REDPGUI extends javax.swing.JDialog {
         setFrame();
     }
     
+    /**
+     * Sets look and feel
+     */
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -51,13 +60,25 @@ public class REDPGUI extends javax.swing.JDialog {
         //</editor-fold>>
     }
 
+    /**
+     * Sets jDialog in middle of screen
+     */
     private void setFrame() {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Removes everything except 0-9 and returns new string
+     * @param text
+     * @return 
+     */
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
     }
+    
+    /**
+     * Resets gui fields
+     */
     private void resetFields(){
         sog_TextField.setText("");
         fornavn_TextField.setText("");
