@@ -30,6 +30,14 @@ public class HovedGUI extends javax.swing.JFrame {
     private SOGNINGSHandler sOGNINGSHandler;
     private String[] columnNames = {"CPR", "Sagssted", "Paragraf", "Foranstaltningsnavn", "Beskrivelse", "PeriodeFra", "PeriodeTil", "AER", "Sagstype", "BetalingCPR", "BetalingBeløb"};
 
+    /**
+     * Constructor
+     * @param rEGSGUI
+     * @param sLEGUI
+     * @param rEDHSGUI
+     * @param sOGNINGSHandler
+     * @param sLEPGUI 
+     */
     public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI) {
         this.rEGSGUI = rEGSGUI;
         this.sLEGUI = sLEGUI;
@@ -43,6 +51,9 @@ public class HovedGUI extends javax.swing.JFrame {
         setTableRules();
     }
 
+    /**
+     * Set look and feel on the jDialog
+     */
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -67,10 +78,16 @@ public class HovedGUI extends javax.swing.JFrame {
         //</editor-fold>>
     }
 
+    /**
+     * Set location to middle of screen on the jDialog
+     */
     private void setFrame() {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Create radio button groups
+     */
     public void setRadioButtonGroups() {
         category_Bg = new ButtonGroup();
         category_Bg.add(cpr_radioButton);
@@ -79,14 +96,27 @@ public class HovedGUI extends javax.swing.JFrame {
         category_Bg.add(sagstype_radioButton);
     }
 
+    /**
+     * Remove everything except 0-9 and return the new string
+     * @param text
+     * @return 
+     */
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
     }
 
+    /**
+     * Remove everything except 0-9 ", and ." and return new string
+     * @param text
+     * @return 
+     */
     public String removeLettersV2(String text) {
         return text.replaceAll("[^0-9.,]", "");
     }
     
+    /**
+     * Set the table rules
+     */
     public void setTableRules() {
         sager_table.getTableHeader().setReorderingAllowed(false);
     }

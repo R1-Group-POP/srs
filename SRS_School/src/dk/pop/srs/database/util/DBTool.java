@@ -16,10 +16,18 @@ import javax.swing.JOptionPane;
 public class DBTool {
 
     private static Connection instance = null;
-
+    
+    /**
+     * private constructor (this class is singleton)
+     */
     private DBTool() {
     }
 
+    /**
+     * Checks if a connection instance already exists. If it does, it will be returned. If not, it will be created and returned.
+     * This makes it impossible to have more than one instance of a connection (singleton)
+     * @return 
+     */
     public static Connection getInstance() {
         if (instance == null) {
             makeInstance();
@@ -29,6 +37,9 @@ public class DBTool {
         }
     }
 
+    /**
+     * Creates a connection instance
+     */
     private static void makeInstance() {
         String FILENAME = "dbconfig.properties"; // Indikates where config file is
         Properties dbProp = new Properties(); // Creates a properties type object

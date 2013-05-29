@@ -18,6 +18,12 @@ public class SLEGUI extends javax.swing.JDialog {
     private SLEHandler sLEHandler;
     private String[] columnNames = {"CPR", "Sagssted", "Paragraf", "Foranstaltningsnavn", "Beskrivelse", "PeriodeFra", "PeriodeTil", "AER", "Sagstype", "BetalingCPR", "BetalingBeløb"};
 
+    /**
+     * Constructor
+     * @param parent
+     * @param modal
+     * @param sLEHandler 
+     */
     public SLEGUI(java.awt.Frame parent, boolean modal, SLEHandler sLEHandler) {
         super(parent, modal);
         this.sLEHandler = sLEHandler;
@@ -27,6 +33,9 @@ public class SLEGUI extends javax.swing.JDialog {
         setTableRules();
     }
 
+    /**
+     * Set look and feel
+     */
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -45,14 +54,23 @@ public class SLEGUI extends javax.swing.JDialog {
         //</editor-fold>>
     }
 
+    /**
+     * Set jDialog location to middle of screen
+     */
     private void setFrame() {
         setLocationRelativeTo(null);
     }
     
+    /**
+     * Set table rules
+     */
     public void setTableRules() {
         sager_table.getTableHeader().setReorderingAllowed(false);
     }
 
+    /**
+     * Reset gui fields
+     */
     private void reset() {
         cpr_textField.setText("");
         sager_table.setModel(new DefaultTableModel());
@@ -61,6 +79,9 @@ public class SLEGUI extends javax.swing.JDialog {
         hentSager_button.setEnabled(false);
     }
 
+    /**
+     * Populate table with sager
+     */
     private void hentSager() {
         String cpr = cpr_textField.getText();
 

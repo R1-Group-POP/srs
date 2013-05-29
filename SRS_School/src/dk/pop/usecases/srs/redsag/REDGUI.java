@@ -20,6 +20,12 @@ public class REDGUI extends javax.swing.JDialog {
     private REDHandler rEDHandler;
     private Sag sag;
 
+    /**
+     * Constructor
+     * @param parent
+     * @param modal
+     * @param rEDHandler 
+     */
     public REDGUI(java.awt.Frame parent, boolean modal, REDHandler rEDHandler) {
         super(parent, modal);
         this.rEDHandler = rEDHandler;
@@ -28,10 +34,18 @@ public class REDGUI extends javax.swing.JDialog {
         setFrame();
     }
 
+    /**
+     * Sets the sag field
+     * @param sag 
+     */
     private void setSag(Sag sag) {
         this.sag = sag;
     }
 
+    /**
+     * Initializes the gui with information from the sag, and runs the "setSag" method
+     * @param sag 
+     */
     public void init(Sag sag) {
         setSag(sag);
 
@@ -105,6 +119,9 @@ public class REDGUI extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Set look and feel
+     */
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -129,18 +146,40 @@ public class REDGUI extends javax.swing.JDialog {
         //</editor-fold>>
     }
 
+    /**
+     * Sets jDialog location in middle of screen
+     */
     private void setFrame() {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Removes everything except 0-9 and returns new string
+     * @param text
+     * @return 
+     */
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
     }
 
+    /**
+     * Removes everything except 0-9 , . and returns new string
+     * @param text
+     * @return 
+     */
     public String removeLettersV2(String text) {
         return text.replaceAll("[^0-9.,]", "");
     }
 
+    /**
+     * Checks if the periode is valid.
+     * A month cant be below 1 and above 12.
+     * The periodeFra cant be higher than periodeTil
+     * @param periodeFra
+     * @param periodeTil
+     * @return
+     * @throws MonthException 
+     */
     public boolean tjekPeriode(int periodeFra, int periodeTil) throws MonthException {
         if (periodeFra < 1 || periodeFra > 12 || periodeTil < 1 || periodeTil > 12) {
             throw new MonthException();
@@ -153,6 +192,9 @@ public class REDGUI extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * Resets gui fields
+     */
     public void resetFields() {
         cpr_textField.setText("");
         sagssted_textField.setText("");

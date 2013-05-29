@@ -10,6 +10,9 @@ package dk.pop.srs.exception;
  */
 public class MonthException extends Exception {
 
+    /**
+     * Indicates that a month is typed incorrectly
+     */
     public MonthException() {
         super("Den angivne måned findes ikke, eller fra og til kan ikke være den samme");
     }

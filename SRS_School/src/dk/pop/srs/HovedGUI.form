@@ -247,7 +247,7 @@
                           <Component id="ui90d_checkBox" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="sager_scrollPane" pref="453" max="32767" attributes="0"/>
+                      <Component id="sager_scrollPane" pref="457" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
