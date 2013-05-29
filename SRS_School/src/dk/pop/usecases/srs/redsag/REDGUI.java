@@ -741,18 +741,14 @@ public class REDGUI extends javax.swing.JDialog {
         
         this.newSag.setBetalingBelob(Double.valueOf(betalingBelob_textField.getText()));
         
-        boolean gemt = rEDHandler.gemSag(newSag, originSag, betalerChanged);
-        
-        if(!gemt) {
-            Betaler betaler = rEDHandler.getBetaler(betalingCPR_textField.getText());
-            betaler.add(newSag);
-            this.newSag.setBetaler(betaler);
-            rEDHandler.gemSag(newSag, originSag, false);
-            gemt = true;
-        } else {
-            this.setVisible(false);
-            resetFields();
+        if(betalerChanged) {
+            if(rEDHandler.checkBetalerExists(betalingCPR_textField.getText())) {
+                Betaler betaler = rEDHandler.getBetaler(betalingCPR_textField.getText());
+                this.newSag.setBetaler(betaler);
+                rEDHandler.gemSag(newSag, originSag, betalerChanged);
+            }
         }
+        
         
     }//GEN-LAST:event_gem_buttonActionPerformed
 

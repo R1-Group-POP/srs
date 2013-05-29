@@ -73,19 +73,6 @@ public class SagDAO {
         }
     }
 
-    public boolean opretBetaler(Betaler betaler) {
-        try {
-            if (!checkValueExists("BetalingCPR", betaler.getBetalingCPR(), "person")) {
-                Statement st = dbConn.createStatement();
-                st.execute("INSERT INTO betaler (BetalingCPR, BetalingNavn) VALUES(̈́'" + betaler.getBetalingCPR() + "', '" + betaler.getBetalingNavn() + "', )");
-                return true;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
 //    public String[] getSag(int sagsID) {
 //        try {
 //            Statement st = dbConn.createStatement();

@@ -77,6 +77,10 @@ public class Person {
         return sager.size();
     }
     
+    public boolean remove(Sag e) {
+        return sager.remove(e);
+    }
+    
     
     
 }

@@ -27,22 +27,7 @@ public class SagsKatalog {
     }
 
     public boolean gemSag(Sag newSag, Sag originSag, boolean betalerChanged) {
-        if (betalerChanged) {
-            boolean betalerGemt = sagDAO.opretBetaler(newSag.getBetaler());
-            
-            if(betalerGemt) {
-                /** gem her **/
-                betalere.add(newSag.getBetaler());
-                int originSagIndex = sager.indexOf(originSag);
-                sager.add(originSagIndex, newSag);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            /** gem her **/
-            return true;
-        }
+        return false;
     }
 
     private void updateArray() {
@@ -69,6 +54,10 @@ public class SagsKatalog {
     public void sletSag(Sag sag) {
         sagDAO.sletSag(sag);
         sager.remove(sag);
+        
+        sag.getPerson().remove(sag);
+        
+        sag.getBetaler().remove(sag);
     }
 
     public boolean sletPerson(Person person) {
@@ -92,6 +81,14 @@ public class SagsKatalog {
             } else if (p.getMellemnavn().equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
             } else if (p.getEfternavn().equalsIgnoreCase(value)) {
+                fundnePersoner.add(p);
+            } else if((p.getFornavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
+                fundnePersoner.add(p);
+            } else if((p.getFornavn() + " " + p.getMellemnavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
+                fundnePersoner.add(p);
+            } else if((p.getFornavn() + " " + p.getMellemnavn()).equalsIgnoreCase(value)) {
+                fundnePersoner.add(p);
+            } else if((p.getMellemnavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
             }
 
@@ -125,6 +122,15 @@ public class SagsKatalog {
             }
         }
         return null;
+    }
+    
+    public boolean checkBetalerExists(String betalingCPR) {
+        for(Betaler b : betalere) {
+            if(b.getBetalingCPR().equals(betalingCPR)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<Sag> sogCPR(String CPR, boolean ui90d) {

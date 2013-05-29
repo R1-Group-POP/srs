@@ -34,6 +34,10 @@ public class REDHandler {
         return sagsKatalog.getBetaler(BetalingCPR);
     }
     
+    public boolean checkBetalerExists(String betalingCPR) {
+        return sagsKatalog.checkBetalerExists(betalingCPR);
+    }
+    
     public ArrayList<Sag> getPersonsSager(String CPR, boolean ui90d) {
         return sagsKatalog.sogCPR(CPR, ui90d);
     }
