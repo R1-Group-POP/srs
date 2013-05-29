@@ -133,6 +133,16 @@ public class SagsKatalog {
             return false;
         }
     }
+    
+    public boolean sletBetaler(Betaler betaler) {
+        if (betaler.getArraySize() == 0) {
+            sagDAO.sletBetaler(betaler);
+            betalere.remove(betaler);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public ArrayList<Person> getPersonV2(String value) {
         ArrayList<Person> fundnePersoner = new ArrayList<>();
@@ -158,6 +168,20 @@ public class SagsKatalog {
 
         }
         return fundnePersoner;
+    }
+    
+    public ArrayList<Betaler> getBetalerV2(String value) {
+        ArrayList<Betaler> fundneBetalere = new ArrayList<>();
+        for (Betaler b : betalere) {
+            if (b.getBetalingCPR().equalsIgnoreCase(value)) {
+                fundneBetalere.add(b);
+                return fundneBetalere;
+            } else if (b.getBetalingNavn().equalsIgnoreCase(value)) {
+                fundneBetalere.add(b);
+            }
+
+        }
+        return fundneBetalere;
     }
 
     public Sag getSag(int sagsID) {
@@ -211,12 +235,13 @@ public class SagsKatalog {
     p.setFornavn(fornavn);
     p.setMellemnavn(mellemnavn);
     p.setEfternavn(efternavn);
+    sagDAO.opdaterPerson(p);
 }
     
     public ArrayList<Sag> sogCPR(String CPR, boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_p = new ArrayList<>();
-            SimpleDateFormat formatter = new SimpleDateFormat("mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM");
             int currentMonth = Integer.valueOf(formatter.format(new java.util.Date()));
             for (Sag s : sager) {
                 int periodeTil = s.getPeriodeTil();
@@ -243,7 +268,7 @@ public class SagsKatalog {
     public ArrayList<Sag> sogParagraf(String paragraf, boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_p = new ArrayList<>();
-            SimpleDateFormat formatter = new SimpleDateFormat("mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM");
             int currentMonth = Integer.valueOf(formatter.format(new java.util.Date()));
             for (Sag s : sager) {
                 int periodeTil = s.getPeriodeTil();
@@ -270,7 +295,7 @@ public class SagsKatalog {
     public ArrayList<Sag> sogSagstype(String sagstype, boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_p = new ArrayList<>();
-            SimpleDateFormat formatter = new SimpleDateFormat("mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM");
             int currentMonth = Integer.valueOf(formatter.format(new java.util.Date()));
             for (Sag s : sager) {
                 int periodeTil = s.getPeriodeTil();
@@ -326,7 +351,7 @@ public class SagsKatalog {
     public ArrayList<Sag> getAlleSager(boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_ui90d = new ArrayList<>();
-            SimpleDateFormat formatter = new SimpleDateFormat("mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM");
             int currentMonth = Integer.valueOf(formatter.format(new java.util.Date()));
             for (Sag s : sager) {
                 int periodeTil = s.getPeriodeTil();
@@ -349,5 +374,9 @@ public class SagsKatalog {
     
     public ArrayList<Person> getAllePersoner(){
         return personer;
+    }
+    
+    public ArrayList<Betaler> getAlleBetalere(){
+        return betalere;
     }
 }

@@ -8,6 +8,7 @@ import dk.pop.usecases.srs.redsag.REDHSGUI;
 import dk.pop.usecases.srs.regsag.REGGUI;
 import dk.pop.srs.sag.Sag;
 import dk.pop.srs.usecases.redperson.REDPGUI;
+import dk.pop.srs.usecases.slebetaler.SLEBGUI;
 import dk.pop.srs.usecases.sleperson.SLEPGUI;
 import dk.pop.srs.usecases.sleperson.SLEPHandler;
 import dk.pop.srs.usecases.slesag.SLEGUI;
@@ -30,23 +31,26 @@ public class HovedGUI extends javax.swing.JFrame {
     private SLEPGUI sLEPGUI;
     private SOGNINGSHandler sOGNINGSHandler;
     private REDPGUI rEDPGUI;
+    private SLEBGUI sLEBGUI;
     private String[] columnNames = {"CPR", "Sagssted", "Paragraf", "Foranstaltningsnavn", "Beskrivelse", "PeriodeFra", "PeriodeTil", "AER", "Sagstype", "BetalingCPR", "BetalingBeløb"};
 
     /**
      * Constructor
+     *
      * @param rEGSGUI
      * @param sLEGUI
      * @param rEDHSGUI
      * @param sOGNINGSHandler
-     * @param sLEPGUI 
+     * @param sLEPGUI
      */
-    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI, REDPGUI rEDPGUI) {
+    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI, REDPGUI rEDPGUI, SLEBGUI sLEBGUI) {
         this.rEGSGUI = rEGSGUI;
         this.sLEGUI = sLEGUI;
         this.rEDHSGUI = rEDHSGUI;
         this.sLEPGUI = sLEPGUI;
         this.sOGNINGSHandler = sOGNINGSHandler;
         this.rEDPGUI = rEDPGUI;
+        this.sLEBGUI = sLEBGUI;
         setLookAndFeel();
         initComponents();
         setFrame();
@@ -101,8 +105,9 @@ public class HovedGUI extends javax.swing.JFrame {
 
     /**
      * Remove everything except 0-9 and return the new string
+     *
      * @param text
-     * @return 
+     * @return
      */
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
@@ -110,13 +115,14 @@ public class HovedGUI extends javax.swing.JFrame {
 
     /**
      * Remove everything except 0-9 ", and ." and return new string
+     *
      * @param text
-     * @return 
+     * @return
      */
     public String removeLettersV2(String text) {
         return text.replaceAll("[^0-9.,]", "");
     }
-    
+
     /**
      * Set the table rules
      */
@@ -163,7 +169,8 @@ public class HovedGUI extends javax.swing.JFrame {
         personer_menu = new javax.swing.JMenu();
         sletPerson_menuItem = new javax.swing.JMenuItem();
         redigerPerson_menuItem = new javax.swing.JMenuItem();
-        betalere_menuItem = new javax.swing.JMenuItem();
+        betalere_menu = new javax.swing.JMenu();
+        sletBetaler_menuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SRS - Sagsregistreringssystem");
@@ -303,7 +310,7 @@ public class HovedGUI extends javax.swing.JFrame {
                     .addComponent(s1_seperator, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ui90d_checkBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sager_scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                .addComponent(sager_scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -411,9 +418,17 @@ public class HovedGUI extends javax.swing.JFrame {
 
         administrer_menu.add(personer_menu);
 
-        betalere_menuItem.setText("Betalere");
-        betalere_menuItem.setEnabled(false);
-        administrer_menu.add(betalere_menuItem);
+        betalere_menu.setText("Betalere");
+
+        sletBetaler_menuItem.setText("Slet betaler");
+        sletBetaler_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sletBetaler_menuItemActionPerformed(evt);
+            }
+        });
+        betalere_menu.add(sletBetaler_menuItem);
+
+        administrer_menu.add(betalere_menu);
 
         default_menuBar.add(administrer_menu);
 
@@ -467,7 +482,33 @@ public class HovedGUI extends javax.swing.JFrame {
                         }
 
                         for (Sag s : sager) {
-                            String[] a = {s.getPerson().getCpr(), s.getSagsSted(), s.getParagraf(), s.getForanstaltningsnavn(), s.getBeskrivelse(), String.valueOf(s.getPeriodeFra()), String.valueOf(s.getPeriodeTil()), String.valueOf(s.getAer()), String.valueOf(s.getSagstype()), s.getBetaler().getBetalingCPR(), String.valueOf(s.getBetalingBelob())};
+                            String sagstype = null;
+                            String aer = null;
+
+                            switch (s.getAer()) {
+                                case 0:
+                                    aer = "Nej";
+                                    break;
+                                case 1:
+                                    aer = "Ja";
+                                    break;
+                            }
+                            switch (s.getSagstype()) {
+                                case 1:
+                                    sagstype = "Socialsag";
+                                    break;
+                                case 2:
+                                    sagstype = "Handicapsag";
+                                    break;
+                                case 3:
+                                    sagstype = "Flygtningerefusion";
+                                    break;
+                                case 4:
+                                    sagstype = "Mellemkommunal";
+                                    break;
+                            }
+
+                            String[] a = {s.getPerson().getCpr(), s.getSagsSted(), s.getParagraf(), s.getForanstaltningsnavn(), s.getBeskrivelse(), String.valueOf(s.getPeriodeFra()), String.valueOf(s.getPeriodeTil()), aer, sagstype, s.getBetaler().getBetalingCPR(), String.valueOf(s.getBetalingBelob())};
                             dtm.addRow(a);
                         }
                         sager_table.setModel(dtm);
@@ -481,16 +522,42 @@ public class HovedGUI extends javax.swing.JFrame {
             }
 
             //Paragraf
-            if(paragrafSearch) {
+            if (paragrafSearch) {
                 ArrayList<Sag> sager = sOGNINGSHandler.sogParagraf(sog_textField.getText(), ui90d_checkBox.isSelected());
-                if(sager != null) {
+                if (sager != null) {
                     DefaultTableModel dtm = new DefaultTableModel();
-                    for(String s : columnNames) {
+                    for (String s : columnNames) {
                         dtm.addColumn(s);
                     }
-                    
-                    for(Sag s : sager) {
-                        String[] a = {s.getPerson().getCpr(), s.getSagsSted(), s.getParagraf(), s.getForanstaltningsnavn(), s.getBeskrivelse(), String.valueOf(s.getPeriodeFra()), String.valueOf(s.getPeriodeTil()), String.valueOf(s.getAer()), String.valueOf(s.getSagstype()), s.getBetaler().getBetalingCPR(), String.valueOf(s.getBetalingBelob())};
+
+                    for (Sag s : sager) {
+                        String sagstype = null;
+                        String aer = null;
+
+                        switch (s.getAer()) {
+                            case 0:
+                                aer = "Nej";
+                                break;
+                            case 1:
+                                aer = "Ja";
+                                break;
+                        }
+                        switch (s.getSagstype()) {
+                            case 1:
+                                sagstype = "Socialsag";
+                                break;
+                            case 2:
+                                sagstype = "Handicapsag";
+                                break;
+                            case 3:
+                                sagstype = "Flygtningerefusion";
+                                break;
+                            case 4:
+                                sagstype = "Mellemkommunal";
+                                break;
+                        }
+
+                        String[] a = {s.getPerson().getCpr(), s.getSagsSted(), s.getParagraf(), s.getForanstaltningsnavn(), s.getBeskrivelse(), String.valueOf(s.getPeriodeFra()), String.valueOf(s.getPeriodeTil()), aer, sagstype, s.getBetaler().getBetalingCPR(), String.valueOf(s.getBetalingBelob())};
                         dtm.addRow(a);
                     }
                     sager_table.setModel(dtm);
@@ -501,19 +568,46 @@ public class HovedGUI extends javax.swing.JFrame {
             }
 
             //Funktion
-            /**Disabled**/
-
+            /**
+             * Disabled*
+             */
             //SagsType
-            if(sagsTypeSearch) {
+            if (sagsTypeSearch) {
                 ArrayList<Sag> sager = sOGNINGSHandler.sogSagstype(sog_textField.getText(), ui90d_checkBox.isSelected());
-                if(sager != null) {
+                if (sager != null) {
                     DefaultTableModel dtm = new DefaultTableModel();
-                    for(String s : columnNames) {
+                    for (String s : columnNames) {
                         dtm.addColumn(s);
                     }
-                    
-                    for(Sag s : sager) {
-                        String[] a = {s.getPerson().getCpr(), s.getSagsSted(), s.getParagraf(), s.getForanstaltningsnavn(), s.getBeskrivelse(), String.valueOf(s.getPeriodeFra()), String.valueOf(s.getPeriodeTil()), String.valueOf(s.getAer()), String.valueOf(s.getSagstype()), s.getBetaler().getBetalingCPR(), String.valueOf(s.getBetalingBelob())};
+
+                    for (Sag s : sager) {
+                        String sagstype = null;
+                        String aer = null;
+
+                        switch (s.getAer()) {
+                            case 0:
+                                aer = "Nej";
+                                break;
+                            case 1:
+                                aer = "Ja";
+                                break;
+                        }
+                        switch (s.getSagstype()) {
+                            case 1:
+                                sagstype = "Socialsag";
+                                break;
+                            case 2:
+                                sagstype = "Handicapsag";
+                                break;
+                            case 3:
+                                sagstype = "Flygtningerefusion";
+                                break;
+                            case 4:
+                                sagstype = "Mellemkommunal";
+                                break;
+                        }
+
+                        String[] a = {s.getPerson().getCpr(), s.getSagsSted(), s.getParagraf(), s.getForanstaltningsnavn(), s.getBeskrivelse(), String.valueOf(s.getPeriodeFra()), String.valueOf(s.getPeriodeTil()), aer, sagstype, s.getBetaler().getBetalingCPR(), String.valueOf(s.getBetalingBelob())};
                         dtm.addRow(a);
                     }
                     sager_table.setModel(dtm);
@@ -532,7 +626,33 @@ public class HovedGUI extends javax.swing.JFrame {
                         dtm.addColumn(s);
                     }
                     for (Sag s : sager) {
-                        String[] a = {s.getPerson().getCpr(), s.getSagsSted(), s.getParagraf(), s.getForanstaltningsnavn(), s.getBeskrivelse(), String.valueOf(s.getPeriodeFra()), String.valueOf(s.getPeriodeTil()), String.valueOf(s.getAer()), String.valueOf(s.getSagstype()), s.getBetaler().getBetalingCPR(), String.valueOf(s.getBetalingBelob())};
+                        String sagstype = null;
+                        String aer = null;
+
+                        switch (s.getAer()) {
+                            case 0:
+                                aer = "Nej";
+                                break;
+                            case 1:
+                                aer = "Ja";
+                                break;
+                        }
+                        switch (s.getSagstype()) {
+                            case 1:
+                                sagstype = "Socialsag";
+                                break;
+                            case 2:
+                                sagstype = "Handicapsag";
+                                break;
+                            case 3:
+                                sagstype = "Flygtningerefusion";
+                                break;
+                            case 4:
+                                sagstype = "Mellemkommunal";
+                                break;
+                        }
+
+                        String[] a = {s.getPerson().getCpr(), s.getSagsSted(), s.getParagraf(), s.getForanstaltningsnavn(), s.getBeskrivelse(), String.valueOf(s.getPeriodeFra()), String.valueOf(s.getPeriodeTil()), aer, sagstype, s.getBetaler().getBetalingCPR(), String.valueOf(s.getBetalingBelob())};
                         dtm.addRow(a);
                     }
                     sager_table.setModel(dtm);
@@ -560,11 +680,9 @@ public class HovedGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_sog_textFieldKeyReleased
 
     private void cpr_radioButtonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cpr_radioButtonPropertyChange
-
     }//GEN-LAST:event_cpr_radioButtonPropertyChange
 
     private void paragraf_radioButtonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_paragraf_radioButtonPropertyChange
-        
     }//GEN-LAST:event_paragraf_radioButtonPropertyChange
 
     private void paragraf_radioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_paragraf_radioButtonItemStateChanged
@@ -584,7 +702,7 @@ public class HovedGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_sagstype_radioButtonItemStateChanged
 
     private void redigerSag_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redigerSag_menuItemActionPerformed
-       rEDHSGUI.setVisible(true);
+        rEDHSGUI.setVisible(true);
     }//GEN-LAST:event_redigerSag_menuItemActionPerformed
 
     private void sletPerson_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sletPerson_menuItemActionPerformed
@@ -594,6 +712,10 @@ public class HovedGUI extends javax.swing.JFrame {
     private void redigerPerson_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redigerPerson_menuItemActionPerformed
         rEDPGUI.setVisible(true);
     }//GEN-LAST:event_redigerPerson_menuItemActionPerformed
+
+    private void sletBetaler_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sletBetaler_menuItemActionPerformed
+        sLEBGUI.setVisible(true);
+    }//GEN-LAST:event_sletBetaler_menuItemActionPerformed
 //
 //    /**
 //     * @param args the command line arguments
@@ -631,7 +753,7 @@ public class HovedGUI extends javax.swing.JFrame {
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu administrer_menu;
-    private javax.swing.JMenuItem betalere_menuItem;
+    private javax.swing.JMenu betalere_menu;
     private javax.swing.JRadioButton cpr_radioButton;
     private javax.swing.JMenuBar default_menuBar;
     private javax.swing.JPanel default_pane;
@@ -656,6 +778,7 @@ public class HovedGUI extends javax.swing.JFrame {
     private javax.swing.JTable sager_table;
     private javax.swing.JRadioButton sagstype_radioButton;
     private javax.swing.JPanel search_pane;
+    private javax.swing.JMenuItem sletBetaler_menuItem;
     private javax.swing.JMenuItem sletPerson_menuItem;
     private javax.swing.JMenuItem sletSag_menuItem;
     private javax.swing.JButton sogEfterSager_button;

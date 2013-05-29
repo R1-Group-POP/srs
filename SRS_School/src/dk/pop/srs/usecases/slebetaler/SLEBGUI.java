@@ -2,39 +2,31 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.pop.srs.usecases.sleperson;
+package dk.pop.srs.usecases.slebetaler;
 
-import dk.pop.srs.person.Person;
-import dk.pop.srs.sag.Sag;
-
+import dk.pop.srs.betaler.Betaler;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Patrick
+ * @author patrick
  */
-public class SLEPGUI extends javax.swing.JDialog {
+public class SLEBGUI extends javax.swing.JDialog {
 
-    private SLEPHandler sLEPHandler;
-    private String[] columnNames = {"CPR", "Fornavn", "Mellemnavn", "Efternavn"};
-
-    /**
-     * Constructor
-     * @param parent
-     * @param modal
-     * @param sLEPHandler 
-     */
-    public SLEPGUI(java.awt.Frame parent, boolean modal, SLEPHandler sLEPHandler) {
+    private SLEBHandler sLEBHandler;
+    private String[] columnNames = {"BetalerCPR", "BetalerNavn"};
+    
+    public SLEBGUI(java.awt.Frame parent, boolean modal, SLEBHandler sLEBHandler) {
         super(parent, modal);
-        this.sLEPHandler = sLEPHandler;
+        this.sLEBHandler = sLEBHandler;
         setLookAndFeel();
         initComponents();
         setFrame();
         setTableRules();
     }
-
+    
     /**
      * Sets jDialog location to middle of the screen
      */
@@ -58,7 +50,7 @@ public class SLEPGUI extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SLEPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SLEBGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>>
     }
@@ -67,7 +59,7 @@ public class SLEPGUI extends javax.swing.JDialog {
      * Set table rules
      */
     public void setTableRules() {
-        personer_table.getTableHeader().setReorderingAllowed(false);
+        betalere_table.getTableHeader().setReorderingAllowed(false);
 
     }
     
@@ -75,51 +67,51 @@ public class SLEPGUI extends javax.swing.JDialog {
      * Get personer and set them to the table model
      * @param ignoreError 
      */
-    private void hentPersoner(boolean ignoreError) {
-        String value = person_textField.getText();
-        ArrayList<Person> personer;
+    private void hentBetalere(boolean ignoreError) {
+        String value = betaler_textField.getText();
+        ArrayList<Betaler> betalere;
         if (!value.isEmpty()) {
-            personer = sLEPHandler.getPersonV2(value);
+            betalere = sLEBHandler.getBetalerV2(value);
 
 
 
-            if (!personer.isEmpty()) {
-                personer_table.setEnabled(true);
+            if (!betalere.isEmpty()) {
+                betalere_table.setEnabled(true);
                 DefaultTableModel dtm = new DefaultTableModel();
                 for (String s : columnNames) {
                     dtm.addColumn(s);
                 }
 
-                for (Person p : personer) {
-                    String[] a = {p.getCpr(), p.getFornavn(), p.getMellemnavn(), p.getEfternavn()};
+                for (Betaler b : betalere) {
+                    String[] a = {b.getBetalingCPR(), b.getBetalingNavn()};
                     dtm.addRow(a);
                 }
-                personer_table.setModel(dtm);
+                betalere_table.setModel(dtm);
             } else {
                 DefaultTableModel dtm = new DefaultTableModel();
                 for (String s : columnNames) {
                     dtm.addColumn(s);
 
                 }
-                personer_table.setModel(dtm);
+                betalere_table.setModel(dtm);
                 if (!ignoreError) {
-                    JOptionPane.showMessageDialog(this, "Personen blev ikke fundet\nHar du tastet rigtigt?", "Fejl", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Betalerne blev ikke fundet\nHar du tastet rigtigt?", "Fejl", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
         else{
-            personer = sLEPHandler.getAllePersoner();
-            personer_table.setEnabled(true);
+            betalere = sLEBHandler.getAlleBetalere();
+            betalere_table.setEnabled(true);
                 DefaultTableModel dtm = new DefaultTableModel();
                 for (String s : columnNames) {
                     dtm.addColumn(s);
                 }
 
-                for (Person p : personer) {
-                    String[] a = {p.getCpr(), p.getFornavn(), p.getMellemnavn(), p.getEfternavn()};
+                for (Betaler b : betalere) {
+                    String[] a = {b.getBetalingCPR(), b.getBetalingNavn()};
                     dtm.addRow(a);
                 }
-                personer_table.setModel(dtm);
+                betalere_table.setModel(dtm);
         }
     }
 
@@ -132,33 +124,33 @@ public class SLEPGUI extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        main_pane = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        person_textField = new javax.swing.JTextField();
+        main_pane2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        betaler_textField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        personer_table = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        betalere_table = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
         hentPersoner_button = new javax.swing.JButton();
         luk_button = new javax.swing.JButton();
         sletPerson_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("CPR/Navn");
+        jLabel3.setText("BetalerCPR/BetalerNavn");
 
-        person_textField.setToolTipText("CPR skal være på 10 tegn");
-        person_textField.addActionListener(new java.awt.event.ActionListener() {
+        betaler_textField.setToolTipText("CPR skal være på 10 tegn");
+        betaler_textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                person_textFieldActionPerformed(evt);
+                betaler_textFieldActionPerformed(evt);
             }
         });
-        person_textField.addKeyListener(new java.awt.event.KeyAdapter() {
+        betaler_textField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                person_textFieldKeyReleased(evt);
+                betaler_textFieldKeyReleased(evt);
             }
         });
 
-        personer_table.setModel(new javax.swing.table.DefaultTableModel(
+        betalere_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -166,17 +158,17 @@ public class SLEPGUI extends javax.swing.JDialog {
 
             }
         ));
-        personer_table.setEnabled(false);
-        personer_table.addFocusListener(new java.awt.event.FocusAdapter() {
+        betalere_table.setEnabled(false);
+        betalere_table.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                personer_tableFocusGained(evt);
+                betalere_tableFocusGained(evt);
             }
         });
-        jScrollPane1.setViewportView(personer_table);
+        jScrollPane1.setViewportView(betalere_table);
 
-        jLabel2.setText("Personer");
+        jLabel4.setText("Betalere");
 
-        hentPersoner_button.setText("Find person");
+        hentPersoner_button.setText("Find betaler");
         hentPersoner_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hentPersoner_buttonActionPerformed(evt);
@@ -190,7 +182,7 @@ public class SLEPGUI extends javax.swing.JDialog {
             }
         });
 
-        sletPerson_button.setText("Slet person");
+        sletPerson_button.setText("Slet betaler");
         sletPerson_button.setEnabled(false);
         sletPerson_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,45 +190,45 @@ public class SLEPGUI extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout main_paneLayout = new javax.swing.GroupLayout(main_pane);
-        main_pane.setLayout(main_paneLayout);
-        main_paneLayout.setHorizontalGroup(
-            main_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(main_paneLayout.createSequentialGroup()
+        javax.swing.GroupLayout main_pane2Layout = new javax.swing.GroupLayout(main_pane2);
+        main_pane2.setLayout(main_pane2Layout);
+        main_pane2Layout.setHorizontalGroup(
+            main_pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(main_pane2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(main_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(main_pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(main_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(main_paneLayout.createSequentialGroup()
+                .addGroup(main_pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(main_pane2Layout.createSequentialGroup()
                         .addComponent(luk_button)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(sletPerson_button)
-                        .addGap(0, 187, Short.MAX_VALUE))
-                    .addGroup(main_paneLayout.createSequentialGroup()
-                        .addComponent(person_textField)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(main_pane2Layout.createSequentialGroup()
+                        .addComponent(betaler_textField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(hentPersoner_button))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        main_paneLayout.setVerticalGroup(
-            main_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(main_paneLayout.createSequentialGroup()
+        main_pane2Layout.setVerticalGroup(
+            main_pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(main_pane2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(main_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(person_textField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(main_pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(betaler_textField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hentPersoner_button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(main_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(main_paneLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 206, Short.MAX_VALUE))
+                .addGroup(main_pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(main_pane2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 189, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(main_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(main_pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sletPerson_button)
                     .addComponent(luk_button))
                 .addContainerGap())
@@ -246,29 +238,30 @@ public class SLEPGUI extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_pane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(main_pane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_pane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(main_pane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void person_textFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_person_textFieldActionPerformed
+    private void betaler_textFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_betaler_textFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_person_textFieldActionPerformed
+    }//GEN-LAST:event_betaler_textFieldActionPerformed
 
-    private void person_textFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_person_textFieldKeyReleased
-    }//GEN-LAST:event_person_textFieldKeyReleased
+    private void betaler_textFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_betaler_textFieldKeyReleased
 
-    private void personer_tableFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_personer_tableFocusGained
+    }//GEN-LAST:event_betaler_textFieldKeyReleased
+
+    private void betalere_tableFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_betalere_tableFocusGained
         sletPerson_button.setEnabled(true);
-    }//GEN-LAST:event_personer_tableFocusGained
+    }//GEN-LAST:event_betalere_tableFocusGained
 
     private void hentPersoner_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hentPersoner_buttonActionPerformed
-        hentPersoner(false);
+        hentBetalere(false);
     }//GEN-LAST:event_hentPersoner_buttonActionPerformed
 
     private void luk_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luk_buttonActionPerformed
@@ -276,26 +269,27 @@ public class SLEPGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_luk_buttonActionPerformed
 
     private void sletPerson_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sletPerson_buttonActionPerformed
-        int selection = personer_table.getSelectedRow();
-        String value = person_textField.getText();
-        ArrayList<Person> personer = sLEPHandler.getPersonV2(value);
+        int selection = betalere_table.getSelectedRow();
+        String value = betaler_textField.getText();
+        ArrayList<Betaler> betalere = sLEBHandler.getBetalerV2(value);
 
-        Person toDelete = personer.get(selection);
+        Betaler toDelete = betalere.get(selection);
 
-        int n = JOptionPane.showConfirmDialog(this, "Er du sikker på du vil slette den valgte person?\nADVARSEL, denne handling kan ikke gøres om!", "Slet person?", JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(this, "Er du sikker på du vil slette den valgte betaler?\nADVARSEL, denne handling kan ikke gøres om!", "Slet betaler?", JOptionPane.YES_NO_OPTION);
         if (n == 0) {
-            if (sLEPHandler.sletPerson(toDelete)) {
-                hentPersoner(true);
-                JOptionPane.showMessageDialog(this, "Personen blev slettet!", "Slettet!", JOptionPane.PLAIN_MESSAGE);
+            if (sLEBHandler.sletBetaler(toDelete)) {
+                hentBetalere(true);
+                JOptionPane.showMessageDialog(this, "Betaleren blev slettet!", "Slettet!", JOptionPane.PLAIN_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Du skal slette alle personens sager før du kan slette personen", "Fejl", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Du skal slette alle betalerens sager før du kan slette betaleren", "Fejl", JOptionPane.ERROR_MESSAGE);
             }
 
         }
     }//GEN-LAST:event_sletPerson_buttonActionPerformed
-    /**
-     * @param args the command line arguments
-     */
+//
+//    /**
+//     * @param args the command line arguments
+//     */
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -310,20 +304,20 @@ public class SLEPGUI extends javax.swing.JDialog {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(SLEPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(SLEBGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(SLEPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(SLEBGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(SLEPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(SLEBGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(SLEPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(SLEBGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the dialog */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                SLEPGUI dialog = new SLEPGUI(new javax.swing.JFrame(), true);
+//                SLEBGUI dialog = new SLEBGUI(new javax.swing.JFrame(), true);
 //                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 //                    @Override
 //                    public void windowClosing(java.awt.event.WindowEvent e) {
@@ -335,14 +329,14 @@ public class SLEPGUI extends javax.swing.JDialog {
 //        });
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField betaler_textField;
+    private javax.swing.JTable betalere_table;
     private javax.swing.JButton hentPersoner_button;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton luk_button;
-    private javax.swing.JPanel main_pane;
-    private javax.swing.JTextField person_textField;
-    private javax.swing.JTable personer_table;
+    private javax.swing.JPanel main_pane2;
     private javax.swing.JButton sletPerson_button;
     // End of variables declaration//GEN-END:variables
 }

@@ -99,6 +99,10 @@ public class Betaler {
         return sager.remove(e);
     }
     
+    public int getArraySize() {
+        return sager.size();
+    }
+    
     
     
     

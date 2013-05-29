@@ -89,6 +89,15 @@ public class SagDAO {
             Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void sletBetaler(Betaler betaler) {
+        try {
+            Statement st = dbConn.createStatement();
+            st.execute("DELETE FROM betaler WHERE betalingCPR='" + betaler.getBetalingCPR() + "'");
+        } catch (SQLException ex) {
+            Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * Updates a Sag in database from a Sag object
@@ -98,6 +107,15 @@ public class SagDAO {
         try {
             Statement st = dbConn.createStatement();
             st.execute("UPDATE sag SET SagsSted='" + sag.getSagsSted() + "', Paragraf='" + sag.getParagraf() + "', foranstaltningsnavn='" + sag.getForanstaltningsnavn() + "', Beskrivelse='" + sag.getBeskrivelse() + "', PeriodeFra='" + sag.getPeriodeFra() + "', PeriodeTil='" + sag.getPeriodeTil() + "', AER='" + sag.getAer() + "', SagsType='" + sag.getSagstype() + "', BetalingCPR='" + sag.getBetaler().getBetalingCPR() + "', BetalingBelob='" + sag.getBetalingBelob() + "' WHERE SagsID=" + sag.getSagsID());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void opdaterPerson(Person person) {
+        try {
+            Statement st = dbConn.createStatement();
+            st.execute("UPDATE person SET Fornavn='" + person.getFornavn()+ "', Mellemnavn='" + person.getMellemnavn() + "', Efternavn='" + person.getEfternavn() + "' WHERE CPR=" + person.getCpr());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
