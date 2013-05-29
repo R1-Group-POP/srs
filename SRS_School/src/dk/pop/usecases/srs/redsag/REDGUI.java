@@ -31,6 +31,7 @@ public class REDGUI extends javax.swing.JDialog {
     
     private void setSag(Sag sag) {
         this.originSag = sag;
+        this.newSag = sag;
     }
     
     public void init(Sag sag) {
@@ -735,18 +736,24 @@ public class REDGUI extends javax.swing.JDialog {
             Betaler betaler = new Betaler(betalingCPR_textField.getText(), betalingNavn_textField.getText());
             betaler.add(newSag);
             this.newSag.setBetaler(betaler);
-            betalerChanged = false;
+            betalerChanged = true;
         }
         
         this.newSag.setBetalingBelob(Double.valueOf(betalingBelob_textField.getText()));
         
-        boolean gemt = rEDHandler.gemSag(newSag, betalerChanged);
+        boolean gemt = rEDHandler.gemSag(newSag, originSag, betalerChanged);
         
         if(!gemt) {
-            
+            Betaler betaler = rEDHandler.getBetaler(betalingCPR_textField.getText());
+            betaler.add(newSag);
+            this.newSag.setBetaler(betaler);
+            rEDHandler.gemSag(newSag, originSag, false);
+            gemt = true;
+        } else {
+            this.setVisible(false);
+            resetFields();
         }
-        this.setVisible(false);
-        resetFields();
+        
     }//GEN-LAST:event_gem_buttonActionPerformed
 
     private void betalingCPR_textFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_betalingCPR_textFieldKeyReleased
