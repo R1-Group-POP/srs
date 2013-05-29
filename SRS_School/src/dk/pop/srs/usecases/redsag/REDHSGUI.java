@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.pop.usecases.srs.redsag;
+package dk.pop.srs.usecases.redsag;
 
 import dk.pop.srs.HovedGUI;
 import dk.pop.srs.sag.Sag;

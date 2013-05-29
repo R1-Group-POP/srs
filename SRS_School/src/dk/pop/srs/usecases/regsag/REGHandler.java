@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.pop.usecases.srs.regsag;
+package dk.pop.srs.usecases.regsag;
 
 import dk.pop.srs.betaler.Betaler;
 import dk.pop.srs.person.Person;

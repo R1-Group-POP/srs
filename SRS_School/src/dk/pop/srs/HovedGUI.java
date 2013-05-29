@@ -4,8 +4,8 @@
  */
 package dk.pop.srs;
 
-import dk.pop.usecases.srs.redsag.REDHSGUI;
-import dk.pop.usecases.srs.regsag.REGGUI;
+import dk.pop.srs.usecases.redsag.REDHSGUI;
+import dk.pop.srs.usecases.regsag.REGGUI;
 import dk.pop.srs.sag.Sag;
 import dk.pop.srs.usecases.redperson.REDPGUI;
 import dk.pop.srs.usecases.slebetaler.SLEBGUI;
