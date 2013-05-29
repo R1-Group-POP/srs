@@ -26,10 +26,19 @@ public class SagsKatalog {
         updateArray();
     }
 
-    public boolean gemSag(Sag sag, boolean betalerChanged) {
+    public boolean gemSag(Sag newSag, Sag originSag, boolean betalerChanged) {
         if (betalerChanged) {
-            /** gem her **/
-            return sagDAO.opretBetaler(sag.getBetaler());
+            boolean betalerGemt = sagDAO.opretBetaler(newSag.getBetaler());
+            
+            if(betalerGemt) {
+                /** gem her **/
+                betalere.add(newSag.getBetaler());
+                int originSagIndex = sager.indexOf(originSag);
+                sager.add(originSagIndex, newSag);
+                return true;
+            } else {
+                return false;
+            }
         } else {
             /** gem her **/
             return true;

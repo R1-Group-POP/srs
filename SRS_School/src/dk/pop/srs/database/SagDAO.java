@@ -77,7 +77,7 @@ public class SagDAO {
         try {
             if (!checkValueExists("BetalingCPR", betaler.getBetalingCPR(), "person")) {
                 Statement st = dbConn.createStatement();
-                st.execute("INSERT INTO person (BetalingCPR, BetalingNavn) VALUES(̈́'" + betaler.getBetalingCPR() + "', '" + betaler.getBetalingNavn() + "', )");
+                st.execute("INSERT INTO betaler (BetalingCPR, BetalingNavn) VALUES(̈́'" + betaler.getBetalingCPR() + "', '" + betaler.getBetalingNavn() + "', )");
                 return true;
             }
         } catch (SQLException ex) {
