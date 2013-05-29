@@ -211,6 +211,7 @@ public class SagsKatalog {
     p.setFornavn(fornavn);
     p.setMellemnavn(mellemnavn);
     p.setEfternavn(efternavn);
+    sagDAO.opdaterPerson(p);
 }
     
     public ArrayList<Sag> sogCPR(String CPR, boolean ui90d) {
