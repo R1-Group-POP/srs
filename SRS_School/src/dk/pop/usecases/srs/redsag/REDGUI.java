@@ -19,7 +19,7 @@ public class REDGUI extends javax.swing.JDialog {
 
     private REDHandler rEDHandler;
     private Sag sag;
-    
+
     public REDGUI(java.awt.Frame parent, boolean modal, REDHandler rEDHandler) {
         super(parent, modal);
         this.rEDHandler = rEDHandler;
@@ -27,40 +27,40 @@ public class REDGUI extends javax.swing.JDialog {
         initComponents();
         setFrame();
     }
-    
+
     private void setSag(Sag sag) {
         this.sag = sag;
     }
-    
+
     public void init(Sag sag) {
         setSag(sag);
-        
+
         cpr_textField.setText(this.sag.getPerson().getCpr());
         cpr_textField.setEnabled(false);
-        
+
         sagssted_textField.setText(this.sag.getSagsSted());
-        
+
         fornavn_textField.setText(this.sag.getPerson().getFornavn());
         fornavn_textField.setEnabled(false);
         mellemnavn_textField.setText(this.sag.getPerson().getMellemnavn());
         mellemnavn_textField.setEnabled(false);
         efternavn_textField.setText(this.sag.getPerson().getEfternavn());
         efternavn_textField.setEnabled(false);
-        
+
         paragraf_textField.setText(this.sag.getParagraf());
         paragraf_textField.setForeground(Color.black);
-        
+
         foranstaltningsnavn_textField.setText(this.sag.getForanstaltningsnavn());
-        
+
         beskrivelse_textArea.setText(this.sag.getBeskrivelse());
-        
+
         periodeFra_textField.setText(String.valueOf(this.sag.getPeriodeFra()));
         periodeFra_textField.setForeground(Color.BLACK);
-        
+
         periodeTil_textField.setText(String.valueOf(this.sag.getPeriodeTil()));
         periodeTil_textField.setForeground(Color.black);
-        
-        switch(this.sag.getAer()) {
+
+        switch (this.sag.getAer()) {
             case 0:
                 aerNej_radioButton.setSelected(true);
                 aerJa_radioButton.setSelected(false);
@@ -70,8 +70,8 @@ public class REDGUI extends javax.swing.JDialog {
                 aerJa_radioButton.setSelected(true);
                 break;
         }
-        
-        switch(this.sag.getSagstype()) {
+
+        switch (this.sag.getSagstype()) {
             case 1:
                 sagstypeSocialsag_radioButton.setSelected(true);
                 sagstypeHandicapsag_radioButton.setSelected(false);
@@ -97,14 +97,14 @@ public class REDGUI extends javax.swing.JDialog {
                 sagstypeMellmkommunal_radioButton.setSelected(true);
                 break;
         }
-        
+
         betalingCPR_textField.setText(this.sag.getBetaler().getBetalingCPR());
         betalingNavn_textField.setText(this.sag.getBetaler().getBetalingNavn());
         betalingNavn_textField.setEnabled(false);
         betalingBelob_textField.setText(String.valueOf(this.sag.getBetalingBelob()));
-        
+
     }
-    
+
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -132,7 +132,7 @@ public class REDGUI extends javax.swing.JDialog {
     private void setFrame() {
         setLocationRelativeTo(null);
     }
-    
+
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
     }
@@ -152,7 +152,7 @@ public class REDGUI extends javax.swing.JDialog {
             }
         }
     }
-    
+
     public void resetFields() {
         cpr_textField.setText("");
         sagssted_textField.setText("");
@@ -707,26 +707,25 @@ public class REDGUI extends javax.swing.JDialog {
     private void gem_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gem_buttonActionPerformed
         int aer = 0;
         int sagstype = 0;
-        
+
         String sagssted = sagssted_textField.getText();
         String paragraf = paragraf_textField.getText();
         String foranstaltningsnavn = foranstaltningsnavn_textField.getText();
         String beskrivelse = beskrivelse_textArea.getText();
-        
+
         String betalingCPR = betalingCPR_textField.getText();
         String betalingNavn = betalingNavn_textField.getText();
         double betalingBelob = Double.valueOf(betalingBelob_textField.getText());
         int periodeFra = Integer.valueOf(periodeFra_textField.getText());
         int periodeTil = Integer.valueOf(periodeTil_textField.getText());
-        
-        
-        if(aerJa_radioButton.isSelected()) {
+
+        if (aerJa_radioButton.isSelected()) {
             aer = 1;
-        } else if(aerNej_radioButton.isSelected()) {
+        } else if (aerNej_radioButton.isSelected()) {
             aer = 0;
         }
-        
-        if(sagstypeSocialsag_radioButton.isSelected()) {
+
+        if (sagstypeSocialsag_radioButton.isSelected()) {
             sagstype = 1;
         } else if (sagstypeHandicapsag_radioButton.isSelected()) {
             sagstype = 2;
@@ -735,7 +734,7 @@ public class REDGUI extends javax.swing.JDialog {
         } else if (sagstypeMellmkommunal_radioButton.isSelected()) {
             sagstype = 4;
         }
-        
+
         rEDHandler.gemSag(sagssted, paragraf, foranstaltningsnavn, beskrivelse, periodeFra, periodeTil, aer, sagstype, betalingNavn, betalingCPR, betalingBelob, sag);
         resetFields();
         this.setVisible(false);
@@ -773,7 +772,6 @@ public class REDGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_cpr_textFieldActionPerformed
 
     private void cpr_textFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpr_textFieldKeyTyped
-
     }//GEN-LAST:event_cpr_textFieldKeyTyped
 
     private void cpr_textFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpr_textFieldKeyReleased
