@@ -87,20 +87,20 @@
                 <Property name="text" type="java.lang.String" value="Personer"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="sletPerson_menuItem">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Slet person"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sletPerson_menuItemActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="redigerPerson_menuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Rediger person"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="redigerPerson_menuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="sletPerson_menuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Slet person"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sletPerson_menuItemActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
@@ -264,7 +264,7 @@
                           <Component id="ui90d_checkBox" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="sager_scrollPane" pref="469" max="32767" attributes="0"/>
+                      <Component id="sager_scrollPane" pref="473" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

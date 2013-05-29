@@ -167,8 +167,8 @@ public class HovedGUI extends javax.swing.JFrame {
         redigerSag_menuItem = new javax.swing.JMenuItem();
         sletSag_menuItem = new javax.swing.JMenuItem();
         personer_menu = new javax.swing.JMenu();
-        sletPerson_menuItem = new javax.swing.JMenuItem();
         redigerPerson_menuItem = new javax.swing.JMenuItem();
+        sletPerson_menuItem = new javax.swing.JMenuItem();
         betalere_menu = new javax.swing.JMenu();
         sletBetaler_menuItem = new javax.swing.JMenuItem();
 
@@ -310,7 +310,7 @@ public class HovedGUI extends javax.swing.JFrame {
                     .addComponent(s1_seperator, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ui90d_checkBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sager_scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+                .addComponent(sager_scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -400,14 +400,6 @@ public class HovedGUI extends javax.swing.JFrame {
 
         personer_menu.setText("Personer");
 
-        sletPerson_menuItem.setText("Slet person");
-        sletPerson_menuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sletPerson_menuItemActionPerformed(evt);
-            }
-        });
-        personer_menu.add(sletPerson_menuItem);
-
         redigerPerson_menuItem.setText("Rediger person");
         redigerPerson_menuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,6 +407,14 @@ public class HovedGUI extends javax.swing.JFrame {
             }
         });
         personer_menu.add(redigerPerson_menuItem);
+
+        sletPerson_menuItem.setText("Slet person");
+        sletPerson_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sletPerson_menuItemActionPerformed(evt);
+            }
+        });
+        personer_menu.add(sletPerson_menuItem);
 
         administrer_menu.add(personer_menu);
 
