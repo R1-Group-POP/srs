@@ -18,8 +18,7 @@ import java.awt.Color;
 public class REDGUI extends javax.swing.JDialog {
 
     private REDHandler rEDHandler;
-    private Sag originSag;
-    private Sag newSag;
+    private Sag sag;
     
     public REDGUI(java.awt.Frame parent, boolean modal, REDHandler rEDHandler) {
         super(parent, modal);
@@ -30,39 +29,38 @@ public class REDGUI extends javax.swing.JDialog {
     }
     
     private void setSag(Sag sag) {
-        this.originSag = sag;
-        this.newSag = sag;
+        this.sag = sag;
     }
     
     public void init(Sag sag) {
         setSag(sag);
         
-        cpr_textField.setText(this.originSag.getPerson().getCpr());
+        cpr_textField.setText(this.sag.getPerson().getCpr());
         cpr_textField.setEnabled(false);
         
-        sagssted_textField.setText(this.originSag.getSagsSted());
+        sagssted_textField.setText(this.sag.getSagsSted());
         
-        fornavn_textField.setText(this.originSag.getPerson().getFornavn());
+        fornavn_textField.setText(this.sag.getPerson().getFornavn());
         fornavn_textField.setEnabled(false);
-        mellemnavn_textField.setText(this.originSag.getPerson().getMellemnavn());
+        mellemnavn_textField.setText(this.sag.getPerson().getMellemnavn());
         mellemnavn_textField.setEnabled(false);
-        efternavn_textField.setText(this.originSag.getPerson().getEfternavn());
+        efternavn_textField.setText(this.sag.getPerson().getEfternavn());
         efternavn_textField.setEnabled(false);
         
-        paragraf_textField.setText(this.originSag.getParagraf());
+        paragraf_textField.setText(this.sag.getParagraf());
         paragraf_textField.setForeground(Color.black);
         
-        foranstaltningsnavn_textField.setText(this.originSag.getForanstaltningsnavn());
+        foranstaltningsnavn_textField.setText(this.sag.getForanstaltningsnavn());
         
-        beskrivelse_textArea.setText(this.originSag.getBeskrivelse());
+        beskrivelse_textArea.setText(this.sag.getBeskrivelse());
         
-        periodeFra_textField.setText(String.valueOf(this.originSag.getPeriodeFra()));
+        periodeFra_textField.setText(String.valueOf(this.sag.getPeriodeFra()));
         periodeFra_textField.setForeground(Color.BLACK);
         
-        periodeTil_textField.setText(String.valueOf(this.originSag.getPeriodeTil()));
+        periodeTil_textField.setText(String.valueOf(this.sag.getPeriodeTil()));
         periodeTil_textField.setForeground(Color.black);
         
-        switch(this.originSag.getAer()) {
+        switch(this.sag.getAer()) {
             case 0:
                 aerNej_radioButton.setSelected(true);
                 aerJa_radioButton.setSelected(false);
@@ -73,7 +71,7 @@ public class REDGUI extends javax.swing.JDialog {
                 break;
         }
         
-        switch(this.originSag.getSagstype()) {
+        switch(this.sag.getSagstype()) {
             case 1:
                 sagstypeSocialsag_radioButton.setSelected(true);
                 sagstypeHandicapsag_radioButton.setSelected(false);
@@ -100,10 +98,10 @@ public class REDGUI extends javax.swing.JDialog {
                 break;
         }
         
-        betalingCPR_textField.setText(this.originSag.getBetaler().getBetalingCPR());
-        betalingNavn_textField.setText(this.originSag.getBetaler().getBetalingNavn());
+        betalingCPR_textField.setText(this.sag.getBetaler().getBetalingCPR());
+        betalingNavn_textField.setText(this.sag.getBetaler().getBetalingNavn());
         betalingNavn_textField.setEnabled(false);
-        betalingBelob_textField.setText(String.valueOf(this.originSag.getBetalingBelob()));
+        betalingBelob_textField.setText(String.valueOf(this.sag.getBetalingBelob()));
         
     }
     
@@ -707,49 +705,40 @@ public class REDGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_annuller_ButtonActionPerformed
 
     private void gem_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gem_buttonActionPerformed
-        boolean betalerChanged = false;
+        int aer = 0;
+        int sagstype = 0;
         
-        this.newSag.setSagsSted(sagssted_textField.getText());
-        this.newSag.setParagraf(paragraf_textField.getText());
-        this.newSag.setForanstaltningsnavn(foranstaltningsnavn_textField.getText());
-        this.newSag.setBeskrivelse(beskrivelse_textArea.getText());
-        this.newSag.setPeriodeFra(Integer.valueOf(periodeFra_textField.getText()));
-        this.newSag.setPeriodeTil(Integer.valueOf(periodeTil_textField.getText()));
+        String sagssted = sagssted_textField.getText();
+        String paragraf = paragraf_textField.getText();
+        String foranstaltningsnavn = foranstaltningsnavn_textField.getText();
+        String beskrivelse = beskrivelse_textArea.getText();
+        
+        String betalingCPR = betalingCPR_textField.getText();
+        String betalingNavn = betalingNavn_textField.getText();
+        double betalingBelob = Double.valueOf(betalingBelob_textField.getText());
+        int periodeFra = Integer.valueOf(periodeFra_textField.getText());
+        int periodeTil = Integer.valueOf(periodeTil_textField.getText());
+        
         
         if(aerJa_radioButton.isSelected()) {
-            this.newSag.setAer(1);
+            aer = 1;
         } else if(aerNej_radioButton.isSelected()) {
-            this.newSag.setAer(0);
+            aer = 0;
         }
         
         if(sagstypeSocialsag_radioButton.isSelected()) {
-            this.newSag.setSagstype(1);
-        } else if(sagstypeHandicapsag_radioButton.isSelected()) {
-            this.newSag.setSagstype(2);
-        } else if(sagstypeFlygtningerefusion_radioButton.isSelected()) {
-            this.newSag.setSagstype(3);
-        } else if(sagstypeMellmkommunal_radioButton.isSelected()) {
-            this.newSag.setSagstype(4);
+            sagstype = 1;
+        } else if (sagstypeHandicapsag_radioButton.isSelected()) {
+            sagstype = 2;
+        } else if (sagstypeFlygtningerefusion_radioButton.isSelected()) {
+            sagstype = 3;
+        } else if (sagstypeMellmkommunal_radioButton.isSelected()) {
+            sagstype = 4;
         }
         
-        if(!betalingCPR_textField.getText().equals(newSag.getBetaler().getBetalingCPR())) {
-            Betaler betaler = new Betaler(betalingCPR_textField.getText(), betalingNavn_textField.getText());
-            betaler.add(newSag);
-            this.newSag.setBetaler(betaler);
-            betalerChanged = true;
-        }
-        
-        this.newSag.setBetalingBelob(Double.valueOf(betalingBelob_textField.getText()));
-        
-        if(betalerChanged) {
-            if(rEDHandler.checkBetalerExists(betalingCPR_textField.getText())) {
-                Betaler betaler = rEDHandler.getBetaler(betalingCPR_textField.getText());
-                this.newSag.setBetaler(betaler);
-                rEDHandler.gemSag(newSag, originSag, betalerChanged);
-            }
-        }
-        
-        
+        rEDHandler.gemSag(sagssted, paragraf, foranstaltningsnavn, beskrivelse, periodeFra, periodeTil, aer, sagstype, betalingNavn, betalingCPR, betalingBelob, sag);
+        resetFields();
+        this.setVisible(false);
     }//GEN-LAST:event_gem_buttonActionPerformed
 
     private void betalingCPR_textFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_betalingCPR_textFieldKeyReleased

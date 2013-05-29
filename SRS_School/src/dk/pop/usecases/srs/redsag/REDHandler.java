@@ -22,8 +22,8 @@ public class REDHandler {
         this.sagsKatalog = sagsKatalog;
     }
     
-    public boolean gemSag(Sag newSag, Sag originSag, boolean betalerChanged) {
-        return sagsKatalog.gemSag(newSag, originSag, betalerChanged);
+    public boolean gemSag(String sagsSted, String paragraf, String foranstalningsnavn, String beskrivelse, int periodeFra, int periodeTil, int aer, int sagsType, String betalingNavn, String betalingCPR, double betalingBelob, Sag originSag) {
+        return sagsKatalog.gemSag(sagsSted, paragraf, foranstalningsnavn, beskrivelse, periodeFra, periodeTil, aer, sagsType, betalingNavn, betalingCPR, betalingBelob, originSag);
     }
 
     public Person getPerson(String CPR) {

@@ -72,6 +72,25 @@ public class SagDAO {
             Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void opdaterSag(Sag sag) {
+        try {
+            Statement st = dbConn.createStatement();
+            st.execute("UPDATE sag SET SagsSted='"+sag.getSagsSted()+"', Paragraf='"+sag.getParagraf()+"', foranstaltningsnavn='"+sag.getForanstaltningsnavn()+"', Beskrivelse='"+sag.getBeskrivelse()+"', PeriodeFra='"+sag.getPeriodeFra()+"', PeriodeTil='"+sag.getPeriodeTil()+"', AER='"+sag.getAer()+"', SagsType='"+sag.getSagstype()+"', BetalingCPR='"+sag.getBetaler().getBetalingCPR()+"', BetalingBelob='"+sag.getBetalingBelob()+"' WHERE SagsID="+sag.getSagsID());
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    public void opretBetaler(Betaler betaler) {
+        try {
+            Statement st = dbConn.createStatement();
+            
+            st.execute("INSERT INTO betaler (betalingCPR, betalingNavn) VALUES('"+betaler.getBetalingCPR()+"', '"+betaler.getBetalingNavn()+"')");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 //    public String[] getSag(int sagsID) {
 //        try {

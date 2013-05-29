@@ -26,8 +26,72 @@ public class SagsKatalog {
         updateArray();
     }
 
-    public boolean gemSag(Sag newSag, Sag originSag, boolean betalerChanged) {
+    public boolean gemSag(String sagsSted, String paragraf, String foranstalningsnavn, String beskrivelse, int periodeFra, int periodeTil, int aer, int sagsType, String betalingNavn, String betalingCPR, double betalingBelob, Sag sag) {
+
+        if (!sag.getBetaler().getBetalingCPR().equals(betalingCPR)) { //Hvis betaleren er blevet ændret
+            if (checkBetalerExists(betalingCPR)) { //Hvis den nye betaler findes i forvejen
+                Betaler betaler = getBetaler(betalingCPR); //Hent nye betaler
+                sag.getBetaler().remove(sag); //Fjern sag fra den originale betaler
+                sag.setBetaler(betaler); //Set betaler i sagen til den nye sag
+                betaler.add(sag); //Tilføj sagen til den nye betaler
+
+                /**
+                 * GEM SAG *
+                 */
+                sag.setAer(aer);
+                sag.setBeskrivelse(beskrivelse);
+                sag.setBetalingBelob(betalingBelob);
+                sag.setForanstaltningsnavn(foranstalningsnavn);
+                sag.setParagraf(paragraf);
+                sag.setPeriodeFra(periodeFra);
+                sag.setPeriodeTil(periodeTil);
+                sag.setSagsSted(sagsSted);
+                sag.setSagstype(sagsType);
+                sagDAO.opdaterSag(sag);
+            } else { //Hvis den nye betaler ikke findes i forvejen
+                Betaler betaler = opretBetaler(betalingCPR, betalingNavn);
+
+                sag.getBetaler().remove(sag);
+                sag.setBetaler(betaler);
+                betaler.add(sag);
+
+                /**
+                 * GEM SAG *
+                 */
+                sag.setAer(aer);
+                sag.setBeskrivelse(beskrivelse);
+                sag.setBetalingBelob(betalingBelob);
+                sag.setForanstaltningsnavn(foranstalningsnavn);
+                sag.setParagraf(paragraf);
+                sag.setPeriodeFra(periodeFra);
+                sag.setPeriodeTil(periodeTil);
+                sag.setSagsSted(sagsSted);
+                sag.setSagstype(sagsType);
+                sagDAO.opdaterSag(sag);
+            }
+        } else {
+            /**
+             * GEM SAG *
+             */
+            sag.setAer(aer);
+            sag.setBeskrivelse(beskrivelse);
+            sag.setBetalingBelob(betalingBelob);
+            sag.setForanstaltningsnavn(foranstalningsnavn);
+            sag.setParagraf(paragraf);
+            sag.setPeriodeFra(periodeFra);
+            sag.setPeriodeTil(periodeTil);
+            sag.setSagsSted(sagsSted);
+            sag.setSagstype(sagsType);
+            sagDAO.opdaterSag(sag);
+        }
         return false;
+    }
+
+    public Betaler opretBetaler(String betalingCPR, String betalingNavn) {
+        Betaler betaler = new Betaler(betalingCPR, betalingNavn);
+        betalere.add(betaler);
+        sagDAO.opretBetaler(betaler);
+        return betaler;
     }
 
     private void updateArray() {
@@ -54,14 +118,14 @@ public class SagsKatalog {
     public void sletSag(Sag sag) {
         sagDAO.sletSag(sag);
         sager.remove(sag);
-        
+
         sag.getPerson().remove(sag);
-        
+
         sag.getBetaler().remove(sag);
     }
 
     public boolean sletPerson(Person person) {
-        if(person.getArraySize() == 0) {
+        if (person.getArraySize() == 0) {
             sagDAO.sletPerson(person);
             personer.remove(person);
             return true;
@@ -82,13 +146,13 @@ public class SagsKatalog {
                 fundnePersoner.add(p);
             } else if (p.getEfternavn().equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
-            } else if((p.getFornavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
+            } else if ((p.getFornavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
-            } else if((p.getFornavn() + " " + p.getMellemnavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
+            } else if ((p.getFornavn() + " " + p.getMellemnavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
-            } else if((p.getFornavn() + " " + p.getMellemnavn()).equalsIgnoreCase(value)) {
+            } else if ((p.getFornavn() + " " + p.getMellemnavn()).equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
-            } else if((p.getMellemnavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
+            } else if ((p.getMellemnavn() + " " + p.getEfternavn()).equalsIgnoreCase(value)) {
                 fundnePersoner.add(p);
             }
 
@@ -104,7 +168,6 @@ public class SagsKatalog {
         }
         return null;
     }
-    
 
     public Person getPerson(String CPR) {
         for (Person p : personer) {
@@ -123,10 +186,10 @@ public class SagsKatalog {
         }
         return null;
     }
-    
+
     public boolean checkBetalerExists(String betalingCPR) {
-        for(Betaler b : betalere) {
-            if(b.getBetalingCPR().equals(betalingCPR)) {
+        for (Betaler b : betalere) {
+            if (b.getBetalingCPR().equals(betalingCPR)) {
                 return true;
             }
         }
