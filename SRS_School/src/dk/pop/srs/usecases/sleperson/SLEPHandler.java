@@ -30,4 +30,8 @@ public class SLEPHandler {
     public boolean checkPersonExists(String CPR) {
         return sagsKatalog.checkValueExists("CPR", CPR, "person");
     }
+    
+    public ArrayList<Person> getAllePersoner(){
+        return sagsKatalog.getAllePersoner();
+    }
 }

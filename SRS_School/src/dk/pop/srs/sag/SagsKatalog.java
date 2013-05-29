@@ -132,7 +132,24 @@ public class SagsKatalog {
         }
         return false;
     }
+    
+    public boolean checkPersonExists(String CPR) {
+        for(Person p : personer) {
+            if(p.getCpr().equals(CPR)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    
+    public void redigerPerson(String CPR, String fornavn, String mellemnavn, String efternavn) {
+    Person p = getPerson(CPR);
+    p.setFornavn(fornavn);
+    p.setMellemnavn(mellemnavn);
+    p.setEfternavn(efternavn);
+}
+    
     public ArrayList<Sag> sogCPR(String CPR, boolean ui90d) {
         if (ui90d) {
             ArrayList<Sag> sager_p = new ArrayList<>();
@@ -265,5 +282,9 @@ public class SagsKatalog {
 
     public boolean checkValueExists(String column, String value, String table) {
         return sagDAO.checkValueExists(column, value, table);
+    }
+    
+    public ArrayList<Person> getAllePersoner(){
+        return personer;
     }
 }

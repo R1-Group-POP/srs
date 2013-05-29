@@ -67,7 +67,7 @@ public class SLEGUI extends javax.swing.JDialog {
         if (cpr.length() == 10) {
             if (sLEHandler.checkPersonExists(cpr)) {
                 sager_table.setEnabled(true);
-                ArrayList<Sag> sager = sLEHandler.getPersonsSager(cpr, false);
+                ArrayList<Sag> sager = sLEHandler.sogCPR(cpr, false);
                 if (!sager.isEmpty()) {
                     DefaultTableModel dtm = new DefaultTableModel();
                     for (String s : columnNames) {
@@ -274,7 +274,7 @@ public class SLEGUI extends javax.swing.JDialog {
     private void sletSag_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sletSag_buttonActionPerformed
         int selection = sager_table.getSelectedRow();
         String cpr = cpr_textField.getText();
-        ArrayList<Sag> sager = sLEHandler.getPersonsSager(cpr.replace("-", ""), false);
+        ArrayList<Sag> sager = sLEHandler.sogCPR(cpr.replace("-", ""), false);
 
         Sag toDelete = sager.get(selection);
         int n = JOptionPane.showConfirmDialog(this, "Er du sikker på du vil slette den valgte sag?\nADVARSEL, denne handling kan ikke gøres om!", "Slet sag?", JOptionPane.YES_NO_OPTION);

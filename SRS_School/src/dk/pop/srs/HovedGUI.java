@@ -7,6 +7,7 @@ package dk.pop.srs;
 import dk.pop.usecases.srs.redsag.REDHSGUI;
 import dk.pop.usecases.srs.regsag.REGGUI;
 import dk.pop.srs.sag.Sag;
+import dk.pop.srs.usecases.redperson.REDPGUI;
 import dk.pop.srs.usecases.sleperson.SLEPGUI;
 import dk.pop.srs.usecases.sleperson.SLEPHandler;
 import dk.pop.srs.usecases.slesag.SLEGUI;
@@ -28,14 +29,16 @@ public class HovedGUI extends javax.swing.JFrame {
     private REDHSGUI rEDHSGUI;
     private SLEPGUI sLEPGUI;
     private SOGNINGSHandler sOGNINGSHandler;
+    private REDPGUI rEDPGUI;
     private String[] columnNames = {"CPR", "Sagssted", "Paragraf", "Foranstaltningsnavn", "Beskrivelse", "PeriodeFra", "PeriodeTil", "AER", "Sagstype", "BetalingCPR", "BetalingBeløb"};
 
-    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI) {
+    public HovedGUI(REGGUI rEGSGUI, SLEGUI sLEGUI, REDHSGUI rEDHSGUI, SOGNINGSHandler sOGNINGSHandler, SLEPGUI sLEPGUI, REDPGUI rEDPGUI) {
         this.rEGSGUI = rEGSGUI;
         this.sLEGUI = sLEGUI;
         this.rEDHSGUI = rEDHSGUI;
         this.sLEPGUI = sLEPGUI;
         this.sOGNINGSHandler = sOGNINGSHandler;
+        this.rEDPGUI = rEDPGUI;
         setLookAndFeel();
         initComponents();
         setFrame();
@@ -129,6 +132,7 @@ public class HovedGUI extends javax.swing.JFrame {
         sletSag_menuItem = new javax.swing.JMenuItem();
         personer_menu = new javax.swing.JMenu();
         sletPerson_menuItem = new javax.swing.JMenuItem();
+        redigerPerson_menuItem = new javax.swing.JMenuItem();
         betalere_menuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -367,6 +371,14 @@ public class HovedGUI extends javax.swing.JFrame {
         });
         personer_menu.add(sletPerson_menuItem);
 
+        redigerPerson_menuItem.setText("Rediger person");
+        redigerPerson_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redigerPerson_menuItemActionPerformed(evt);
+            }
+        });
+        personer_menu.add(redigerPerson_menuItem);
+
         administrer_menu.add(personer_menu);
 
         betalere_menuItem.setText("Betalere");
@@ -548,6 +560,10 @@ public class HovedGUI extends javax.swing.JFrame {
     private void sletPerson_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sletPerson_menuItemActionPerformed
         sLEPGUI.setVisible(true);
     }//GEN-LAST:event_sletPerson_menuItemActionPerformed
+
+    private void redigerPerson_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redigerPerson_menuItemActionPerformed
+        rEDPGUI.setVisible(true);
+    }//GEN-LAST:event_redigerPerson_menuItemActionPerformed
 //
 //    /**
 //     * @param args the command line arguments
@@ -601,6 +617,7 @@ public class HovedGUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton paragraf_radioButton;
     private javax.swing.JMenu personer_menu;
     private javax.swing.JMenuItem print_menuItem;
+    private javax.swing.JMenuItem redigerPerson_menuItem;
     private javax.swing.JMenuItem redigerSag_menuItem;
     private javax.swing.JMenuItem registrerSag_menuItem;
     private javax.swing.JSeparator s1_seperator;

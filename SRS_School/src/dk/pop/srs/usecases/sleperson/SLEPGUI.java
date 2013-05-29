@@ -61,32 +61,49 @@ public class SLEPGUI extends javax.swing.JDialog {
 
     private void hentPersoner(boolean ignoreError) {
         String value = person_textField.getText();
-        ArrayList<Person> personer = sLEPHandler.getPersonV2(value);
+        ArrayList<Person> personer;
+        if (!value.isEmpty()) {
+            personer = sLEPHandler.getPersonV2(value);
 
 
 
-        if (!personer.isEmpty()) {
+            if (!personer.isEmpty()) {
+                personer_table.setEnabled(true);
+                DefaultTableModel dtm = new DefaultTableModel();
+                for (String s : columnNames) {
+                    dtm.addColumn(s);
+                }
+
+                for (Person p : personer) {
+                    String[] a = {p.getCpr(), p.getFornavn(), p.getMellemnavn(), p.getEfternavn()};
+                    dtm.addRow(a);
+                }
+                personer_table.setModel(dtm);
+            } else {
+                DefaultTableModel dtm = new DefaultTableModel();
+                for (String s : columnNames) {
+                    dtm.addColumn(s);
+
+                }
+                personer_table.setModel(dtm);
+                if (!ignoreError) {
+                    JOptionPane.showMessageDialog(this, "Personen blev ikke fundet\nHar du tastet rigtigt?", "Fejl", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+        else{
+            personer = sLEPHandler.getAllePersoner();
             personer_table.setEnabled(true);
-            DefaultTableModel dtm = new DefaultTableModel();
-            for (String s : columnNames) {
-                dtm.addColumn(s);
-            }
+                DefaultTableModel dtm = new DefaultTableModel();
+                for (String s : columnNames) {
+                    dtm.addColumn(s);
+                }
 
-            for (Person p : personer) {
-                String[] a = {p.getCpr(), p.getFornavn(), p.getMellemnavn(), p.getEfternavn()};
-                dtm.addRow(a);
-            }
-            personer_table.setModel(dtm);
-        } else {
-            DefaultTableModel dtm = new DefaultTableModel();
-            for (String s : columnNames) {
-                dtm.addColumn(s);
-
-            }
-            personer_table.setModel(dtm);
-            if (!ignoreError) {
-                JOptionPane.showMessageDialog(this, "Personen blev ikke fundet\nHar du tastet rigtigt?", "Fejl", JOptionPane.ERROR_MESSAGE);
-            }
+                for (Person p : personer) {
+                    String[] a = {p.getCpr(), p.getFornavn(), p.getMellemnavn(), p.getEfternavn()};
+                    dtm.addRow(a);
+                }
+                personer_table.setModel(dtm);
         }
     }
 
