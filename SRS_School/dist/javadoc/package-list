@@ -1,0 +1,14 @@
+dk.pop.srs
+dk.pop.srs.betaler
+dk.pop.srs.database
+dk.pop.srs.database.util
+dk.pop.srs.exception
+dk.pop.srs.person
+dk.pop.srs.sag
+dk.pop.srs.usecases.redperson
+dk.pop.srs.usecases.redsag
+dk.pop.srs.usecases.regsag
+dk.pop.srs.usecases.slebetaler
+dk.pop.srs.usecases.sleperson
+dk.pop.srs.usecases.slesag
+dk.pop.srs.usecases.sogning
