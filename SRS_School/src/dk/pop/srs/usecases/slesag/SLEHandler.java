@@ -44,6 +44,6 @@ public class SLEHandler {
      * @return 
      */
     public boolean checkPersonExists(String CPR) {
-        return sagsKatalog.checkValueExists("CPR", CPR, "person");
+        return sagsKatalog.checkPersonExists(CPR);
     }
 }
