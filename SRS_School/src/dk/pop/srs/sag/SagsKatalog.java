@@ -161,12 +161,14 @@ public class SagsKatalog {
             person = getPerson(CPR);
         } else {
             person = new Person(CPR, fornavn, mellemnavn, efternavn);
+            personer.add(person);
         }
 
         if (checkBetalerExists(betalingCPR)) {
             betaler = getBetaler(betalingCPR);
         } else {
             betaler = new Betaler(betalingCPR, betalingNavn);
+            betalere.add(betaler);
         }
 
         Sag sag = new Sag(sagsSted, paragraf, foranstalningsnavn, beskrivelse, person, betaler, betalingBelob, periodeFra, periodeTil, aer, sagsType);
@@ -175,9 +177,6 @@ public class SagsKatalog {
         sag.setSagsID(sagsID);
         person.add(sag);
         betaler.add(sag);
-
-        personer.add(person);
-        betalere.add(betaler);
     }
 
     /**
