@@ -129,13 +129,18 @@ public class Person {
     }
     
     /**
-     * Removes a Sag object from sager ArrayList
+     * Returns the size of sager ArrayList
      * @return 
      */
     public int getArraySize() {
         return sager.size();
     }
     
+    /**
+     * Removes a Sag object from sager ArrayList
+     * @param e
+     * @return 
+     */
     public boolean remove(Sag e) {
         return sager.remove(e);
     }

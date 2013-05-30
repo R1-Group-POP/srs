@@ -99,6 +99,10 @@ public class Betaler {
         return sager.remove(e);
     }
     
+    /**
+     * Returns the size og the sager ArrayList
+     * @return 
+     */
     public int getArraySize() {
         return sager.size();
     }
