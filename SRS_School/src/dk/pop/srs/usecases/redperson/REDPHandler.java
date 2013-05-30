@@ -13,25 +13,43 @@ import java.util.ArrayList;
  * @author Patrick
  */
 public class REDPHandler {
-private SagsKatalog sagsKatalog;
 
+    private SagsKatalog sagsKatalog;
+
+    /**
+     * Constructor
+     * @param sagsKatalog 
+     */
     public REDPHandler(SagsKatalog sagsKatalog) {
         this.sagsKatalog = sagsKatalog;
-        
     }
 
-public Person getPerson(String CPR) {
-return sagsKatalog.getPerson(CPR);
-}
+    /**
+     * Returns a person object found by CPR
+     * @param CPR
+     * @return 
+     */
+    public Person getPerson(String CPR) {
+        return sagsKatalog.getPerson(CPR);
+    }
 
-public boolean checkPersonExists(String CPR) {
-    return sagsKatalog.checkPersonExists(CPR);
-}
+    /**
+     * Checks if a person exists
+     * @param CPR
+     * @return 
+     */
+    public boolean checkPersonExists(String CPR) {
+        return sagsKatalog.checkPersonExists(CPR);
+    }
 
-public void redigerPerson(String CPR, String fornavn, String mellemnavn, String efternavn) {
-    sagsKatalog.redigerPerson(CPR, fornavn, mellemnavn, efternavn);    
-}
-
-
-
+    /**
+     * Saves a person with the new variables
+     * @param CPR
+     * @param fornavn
+     * @param mellemnavn
+     * @param efternavn 
+     */
+    public void redigerPerson(String CPR, String fornavn, String mellemnavn, String efternavn) {
+        sagsKatalog.redigerPerson(CPR, fornavn, mellemnavn, efternavn);
+    }
 }

@@ -19,6 +19,12 @@ public class REDPGUI extends javax.swing.JDialog {
     
     private REDPHandler rEDPHandler;
     
+    /**
+     * Constructor
+     * @param parent
+     * @param modal
+     * @param rEDPHandler 
+     */
     public REDPGUI(java.awt.Frame parent, boolean modal, REDPHandler rEDPHandler) {
         super(parent, modal);
         this.rEDPHandler = rEDPHandler;
@@ -27,6 +33,9 @@ public class REDPGUI extends javax.swing.JDialog {
         setFrame();
     }
     
+    /**
+     * Sets look and feel
+     */
     private void setLookAndFeel() {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -51,18 +60,33 @@ public class REDPGUI extends javax.swing.JDialog {
         //</editor-fold>>
     }
 
+    /**
+     * Sets jDialog in middle of screen
+     */
     private void setFrame() {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Removes everything except 0-9 and returns new string
+     * @param text
+     * @return 
+     */
     public String removeLetters(String text) {
         return text.replaceAll("[^0-9]", "");
     }
+    
+    /**
+     * Resets gui fields
+     */
     private void resetFields(){
         sog_TextField.setText("");
         fornavn_TextField.setText("");
         mellemnavn_TextField.setText("");
         efternavn_TextField.setText("");
+        fornavn_TextField.setEnabled(false);
+        mellemnavn_TextField.setEnabled(false);
+        efternavn_TextField.setEnabled(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,16 +101,19 @@ public class REDPGUI extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         sog_TextField = new javax.swing.JTextField();
         findPerson_JButton = new javax.swing.JButton();
-        fornavn_TextField = new javax.swing.JTextField();
-        mellemnavn_TextField = new javax.swing.JTextField();
+        luk_JButton = new javax.swing.JButton();
+        rediger_JButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         efternavn_TextField = new javax.swing.JTextField();
+        mellemnavn_TextField = new javax.swing.JTextField();
+        fornavn_TextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        luk_JButton = new javax.swing.JButton();
-        rediger_JButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Rediger person");
+        setResizable(false);
 
         jLabel1.setText("CPR");
 
@@ -109,6 +136,28 @@ public class REDPGUI extends javax.swing.JDialog {
             }
         });
 
+        luk_JButton.setText("Luk");
+        luk_JButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                luk_JButtonActionPerformed(evt);
+            }
+        });
+
+        rediger_JButton.setText("Gem");
+        rediger_JButton.setEnabled(false);
+        rediger_JButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rediger_JButtonActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        efternavn_TextField.setEnabled(false);
+
+        mellemnavn_TextField.setEnabled(false);
+
+        fornavn_TextField.setEnabled(false);
         fornavn_TextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fornavn_TextFieldActionPerformed(evt);
@@ -121,20 +170,40 @@ public class REDPGUI extends javax.swing.JDialog {
 
         jLabel4.setText("Efternavn");
 
-        luk_JButton.setText("Luk");
-        luk_JButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                luk_JButtonActionPerformed(evt);
-            }
-        });
-
-        rediger_JButton.setText("Rediger");
-        rediger_JButton.setEnabled(false);
-        rediger_JButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rediger_JButtonActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fornavn_TextField)
+                    .addComponent(mellemnavn_TextField)
+                    .addComponent(efternavn_TextField))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(fornavn_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mellemnavn_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(efternavn_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,29 +212,19 @@ public class REDPGUI extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sog_TextField, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(findPerson_JButton))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(21, 21, 21)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(efternavn_TextField, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                    .addComponent(mellemnavn_TextField)
-                                    .addComponent(fornavn_TextField)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(luk_JButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rediger_JButton)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(rediger_JButton))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sog_TextField, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(findPerson_JButton)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -176,19 +235,9 @@ public class REDPGUI extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(sog_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(findPerson_JButton))
-                .addGap(52, 52, 52)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fornavn_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mellemnavn_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(efternavn_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(luk_JButton)
                     .addComponent(rediger_JButton))
@@ -231,6 +280,9 @@ public class REDPGUI extends javax.swing.JDialog {
         mellemnavn_TextField.setText(p.getMellemnavn());
         efternavn_TextField.setText(p.getEfternavn());
         rediger_JButton.setEnabled(true);
+        fornavn_TextField.setEnabled(true);
+        mellemnavn_TextField.setEnabled(true);
+        efternavn_TextField.setEnabled(true);
         }
         else {
             JOptionPane.showMessageDialog(this, "CPR nummeret blev ikke fundet\nHar du tastet rigtigt?", "Fejl", JOptionPane.ERROR_MESSAGE);
@@ -251,7 +303,7 @@ public class REDPGUI extends javax.swing.JDialog {
     private void rediger_JButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rediger_JButtonActionPerformed
         rEDPHandler.redigerPerson(sog_TextField.getText(), fornavn_TextField.getText(), mellemnavn_TextField.getText(), efternavn_TextField.getText());
         resetFields();
-        JOptionPane.showMessageDialog(this, "Personen blev redigeret!", "Succes!", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Personen blev gemt!", "Gemt!", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_rediger_JButtonActionPerformed
 
     /**
@@ -304,6 +356,7 @@ public class REDPGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton luk_JButton;
     private javax.swing.JTextField mellemnavn_TextField;
     private javax.swing.JButton rediger_JButton;

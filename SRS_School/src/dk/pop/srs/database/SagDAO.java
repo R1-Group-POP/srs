@@ -25,7 +25,8 @@ public class SagDAO {
 
     /**
      * Constructor
-     * @param dbConn 
+     *
+     * @param dbConn
      */
     public SagDAO(Connection dbConn) {
         this.dbConn = dbConn;
@@ -33,8 +34,9 @@ public class SagDAO {
 
     /**
      * Creates a Sag in database from a Sag object
+     *
      * @param sag
-     * @return 
+     * @return
      */
     public int opretSag(Sag sag) {
         try {
@@ -64,7 +66,8 @@ public class SagDAO {
 
     /**
      * Deletes a Sag from database from a Sag object
-     * @param sag 
+     *
+     * @param sag
      */
     public void sletSag(Sag sag) {
         try {
@@ -79,7 +82,8 @@ public class SagDAO {
 
     /**
      * Deletes a Person from database from a Person object
-     * @param person 
+     *
+     * @param person
      */
     public void sletPerson(Person person) {
         try {
@@ -89,7 +93,7 @@ public class SagDAO {
             Logger.getLogger(SagDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void sletBetaler(Betaler betaler) {
         try {
             Statement st = dbConn.createStatement();
@@ -101,7 +105,8 @@ public class SagDAO {
 
     /**
      * Updates a Sag in database from a Sag object
-     * @param sag 
+     *
+     * @param sag
      */
     public void opdaterSag(Sag sag) {
         try {
@@ -111,11 +116,11 @@ public class SagDAO {
             ex.printStackTrace();
         }
     }
-    
+
     public void opdaterPerson(Person person) {
         try {
             Statement st = dbConn.createStatement();
-            st.execute("UPDATE person SET Fornavn='" + person.getFornavn()+ "', Mellemnavn='" + person.getMellemnavn() + "', Efternavn='" + person.getEfternavn() + "' WHERE CPR=" + person.getCpr());
+            st.execute("UPDATE person SET Fornavn='" + person.getFornavn() + "', Mellemnavn='" + person.getMellemnavn() + "', Efternavn='" + person.getEfternavn() + "' WHERE CPR=" + person.getCpr());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -123,7 +128,8 @@ public class SagDAO {
 
     /**
      * Creates a Betaler in database form a Betaler object
-     * @param betaler 
+     *
+     * @param betaler
      */
     public void opretBetaler(Betaler betaler) {
         try {
@@ -134,13 +140,14 @@ public class SagDAO {
             ex.printStackTrace();
         }
     }
-    
+
     /**
      * Checks if a value in a table exists, and return true or false
+     *
      * @param column
      * @param value
      * @param table
-     * @return 
+     * @return
      */
     public boolean checkValueExists(String column, String value, String table) {
         try {
@@ -156,10 +163,12 @@ public class SagDAO {
         }
         return false;
     }
-    
+
     /**
-     * Returns an ArrayList with Sager, Personer, and Betalere, taken from the database and assembled
-     * @return 
+     * Returns an ArrayList with Sager, Personer, and Betalere, taken from the
+     * database and assembled
+     *
+     * @return
      */
     public ArrayList<ArrayList> getEverything() {
         try {

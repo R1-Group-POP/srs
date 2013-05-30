@@ -50,6 +50,10 @@ public class SLEPHandler {
         return sagsKatalog.checkValueExists("CPR", CPR, "person");
     }
     
+    /**
+     * Returns an ArrayList with all personer
+     * @return 
+     */
     public ArrayList<Person> getAllePersoner(){
         return sagsKatalog.getAllePersoner();
     }
